@@ -1,1 +1,1 @@
-# WebCothority
+# Web-frontend for cothority
