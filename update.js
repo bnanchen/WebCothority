@@ -1,3 +1,6 @@
+/*****************************************//**
+* fonction de mise à jour des données de la page
+*/
 function update() {
   var list = updateList();
   var numberBandwidth = 0;
@@ -9,6 +12,9 @@ function update() {
   updateTable(list);
 }
 
+/*****************************************//**
+* fonction de mise à jour du tableau
+*/
 function updateTable(list) {
   // enlève les lignes du tableau précédents
   $("#status td").each(function() {

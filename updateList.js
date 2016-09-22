@@ -18,7 +18,9 @@ var set_1 = [node_1, node_3, node_4, node_5];
 var set_2 = [node_2, node_4, node_6];
 var set_3 = [node_3, node_4, node_5, node_6];
 
-// Update-function:
+/*****************************************//**
+* fonction de mise à jour de la liste des noeuds actifs
+*/
 function updateList() {
   var chosenSetNumber = Math.floor((Math.random() * 10) + 1) % 3;
   var chosenSet;
