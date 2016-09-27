@@ -1,17 +1,20 @@
 // constructeur pour les noeuds:
-function node(name, ip, bandwidth_used) {
+function node(name, ip, portNumber, uptime, bandwidth_used, number_services) {
   this.name = name;
   this.ip = ip;
+  this.portNumber = portNumber;
+  this.uptime = uptime;
   this.bandwidth_used = bandwidth_used;
+  this.number_services = number_services;
 }
 
 // listes des noeuds:
-var node_1 = new node("Paul", 23, 14);
-var node_2 = new node("Sarah", 234, 2);
-var node_3 = new node("Xavier", 22, 4);
-var node_4 = new node("Bubba", 34, 45);
-var node_5 = new node("Stanley", 55, 23);
-var node_6 = new node("Billy", 45, 22);
+var node_1 = new node("Paul", "69.89.31.226", 14, 234, 34, 2);
+var node_2 = new node("Sarah", "69.89.31.226", 2, 235, 23, 3);
+var node_3 = new node("Xavier", "69.89.31.226", 4, 534, 12, 4);
+var node_4 = new node("Bubba", "69.89.31.226", 45, 234, 5, 5);
+var node_5 = new node("Stanley", "69.89.31.226", 23, 345, 32, 6);
+var node_6 = new node("Billy", "69.89.31.226", 22, 235, 23, 7);
 
 // 3 arrays de noeuds:
 var set_1 = [node_1, node_3, node_4, node_5];

@@ -23,6 +23,6 @@ function updateTable(list) {
   // ajoute les nouvelles lignes au tableau
   var table = $("#status");
   $.each(list, function(i, val) {
-    table.append("<tr><td>"+ val.name +"</td><td>"+ val.ip +"</td><td>"+ val.bandwidth_used +"</td></tr>");
+    table.append("<tr><td>"+ val.name +"</td><td>"+ val.ip +"</td><td>"+ val.portNumber +"</td><td>"+ val.portNumber +"</td><td>"+ val.bandwidth_used +"</td><td>"+ val.number_services +"</td></tr>");
   });
 }
