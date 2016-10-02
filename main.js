@@ -1,4 +1,4 @@
-    // la notion de data je ne comprends pas...
+
     // si je mets dans le ready ne fonctionne pas:
     // var hello = $("#hello");
     // hello.on("click", function(event) {
@@ -25,59 +25,69 @@
     });
 
 
-// MAIN:
+/*****************************************//**
+* MAIN
+*/
     $( document ).ready(function() { // comme un main
       // appelle la fonction udpateList() toutes les 3 secondes:
       setInterval(function(){update()}, 3000);
       // $("#hello").on("click", function(event) {
       //   alert(list[0].name);
       // });
+      var hello = $("#hello");
+      hello.on("click", function() {
+        console.log("Hello World!");
+      });
 
-      // ajouter par Linus Gasser
-      //var socket = new WebSocket("ws://localhost:6879");
-      //socket.Send("test");
-      required("protobufjs")
-      // var ProtoBuf = dcodeIO.ProtoBuf;
-      if (typeof dcodeIO === 'undefined' || !dcodeIO.ProtoBuf) {
-        throw(new Error("Protobuf.js is not present. Try manual setup!"));
-      }
-      // test avec bouton hello world
-      $("#hello").on("click", send());
-      // Initialize Protobuf.js
-      var ProtoBuf = dcodeIO.ProtoBuf;
-      var Message = ProtoBuf.loadProtoFile("./example.proto").build("Message");
-      // Connect to our server: node server.js
-      var socket = new WebSocket("ws://localhost:8080/ws");
-      socket.binaryType = "arraybuffer";
+      // Test 1: (ne fonctionne pas)
+  //     var ProtoBuf = dcodeIO.ProtoBuf; // dcodeIO is not defined
+  //     if (typeof dcodeIO === 'undefined' || !dcodeIO.ProtoBuf) {
+  //       throw(new Error("Protobuf.js is not present. Try manual setup!"));
+  //     }
+  //     // test avec bouton hello world
+  //     $("#hello").on("click", send());
+  //     // Initialize Protobuf.js
+  //     var ProtoBuf = dcodeIO.ProtoBuf;
+  //     var Message = ProtoBuf.loadProtoFile("./example.proto").build("Message");
+  //     // Connect to our server: node server.js
+  //     var socket = new WebSocket("ws://localhost:8080/ws");
+  //     socket.binaryType = "arraybuffer";
+  //
+  //     function send() {
+  //       if (socket.readyState == WebSocket.OPEN) {
+  //         var msg = new Message(text.value);
+  //         socket.send(msg.toArrayBuffer());
+  //         log.value += "Sent: "+ msg.text +"\n";
+  //       } else {
+  //         log.value += "Not connected\n";
+  //       }
+  //     }
+  //
+  //     socket.onopen = function() {
+  //       log.value += "Connected\n";
+  //     };
+  //
+  //     socket.onclose = function() {
+  //       log.value += "Disconnected\n";
+  //     };
+  //
+  //     socket.onmessage = function(evt) {
+  //       try {
+  //         // Decode the Message
+  //         var msg = Message.decode(evt.data);
+  //         log.value += "Received: "+ msg.text+"\n";
+  //       } catch (err) {
+  //         log.value += "Error: "+err+"\n";
+  //       }
+  //     }
+  //
+  // });
+  //
+  // log.value = ""; // Clear log on reload
 
-      function send() {
-        if (socket.readyState == WebSocket.OPEN) {
-          var msg = new Message(text.value);
-          socket.send(msg.toArrayBuffer());
-          log.value += "Sent: "+ msg.text +"\n";
-        } else {
-          log.value += "Not connected\n";
-        }
-      }
+  //test 2:
+  var ProtoBuf = require(["protobufjs"]); // console says:"require not defined"
+  //var ProtoBuf = dcodeIO.ProtoBuf; // console says:"dcodeIO not defined"
+  //var Builder = ProtoBuf.newBuilder(); // la fonction newBuilder() n'existe pas
 
-      socket.onopen = function() {
-        log.value += "Connected\n";
-      };
-
-      socket.onclose = function() {
-        log.value += "Disconnected\n";
-      };
-
-      socket.onmessage = function(evt) {
-        try {
-          // Decode the Message
-          var msg = Message.decode(evt.data);
-          log.value += "Received: "+ msg.text+"\n";
-        } catch (err) {
-          log.value += "Error: "+err+"\n";
-        }
-      }
-
-  });
-
-  log.value = ""; // Clear log on reload
+});
