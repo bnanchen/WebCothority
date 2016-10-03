@@ -86,8 +86,39 @@
   // log.value = ""; // Clear log on reload
 
   //test 2:
-  var ProtoBuf = require(["protobufjs"]); // console says:"require not defined"
-  //var ProtoBuf = dcodeIO.ProtoBuf; // console says:"dcodeIO not defined"
-  //var Builder = ProtoBuf.newBuilder(); // la fonction newBuilder() n'existe pas
+  var ProtoBuf = dcodeIO.ProtoBuf;
+  var Builder = ProtoBuf.newBuilder();
+  var socket = new WebSocket("ws://localhost:6979/debug");
+  socket.binaryType = "arraybuffer";
+  // quand le socket est ouvert alors il va devoir réagir par cette fonction:
+  // socket.onopen = function() { // à l'ouverture réagit de cette manière: envoie un message "ping"
+  //   socket.send("ping");
+  // }
+  // quand un message est reçu par le socket alors il va devoir réagir par cette fonction:
+  // socket.onmessage = function(e) { // traite le message reçu et l'affiche dans la console
+  //   console.log(e.data);
+  //   socket.send("ping");
+  // };
+
+  // converts hexadecimal to bytes:
+  function hexToBytes(hex) {
+    for (var bytes = [], c = 0; c < hex.length; c += 2)
+    bytes.push(parseInt(hex.substr(c, 2), 16));
+    return bytes;
+}
+
+  socket.onopen = function() {
+    socket.send(hexToBytes("0"));
+    socket.send(hexToBytes("10"));
+
+    var hex = hexToBytes("313c89a12cab56ce872744d2d7e144ce");
+    socket.send(hex);
+    console.log(hex);
+
+  }
+  socket.onmessage = function(e) { // traite le message reçu et l'affiche dans la console
+    console.log(e.data);
+    socket.send("ping");
+  };
 
 });
