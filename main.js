@@ -107,14 +107,20 @@
     return bytes;
 }
 
+  // when the socket is opened:
   socket.onopen = function() {
     socket.send(hexToBytes("0"));
-    socket.send(hexToBytes("10"));
-
-    var hex = hexToBytes("313c89a12cab56ce872744d2d7e144ce");
-    socket.send(hex);
-    console.log(hex);
-
+    socket.send(hexToBytes("3"));
+    var hex = "313c89a12cab56ce872744d2d7e144ce";
+    //conversion to a binary array:
+    var byteArray = new Uint8Array(hex.length/2);
+    for (var i = 0; i < byteArray.length; i++) {
+      byteArray[i] = parseInt(hex.substr(i*2, 2), 16);
+    }
+    // create a blob used to send the data:
+    var blob = new Blob([byteArray], {type: "application/octet-stream"});
+    socket.send(blob);
+    console.log(blob);
   }
   socket.onmessage = function(e) { // traite le message reçu et l'affiche dans la console
     console.log(e.data);
