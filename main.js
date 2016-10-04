@@ -100,27 +100,23 @@
   //   socket.send("ping");
   // };
 
-  // converts hexadecimal to bytes:
+  // converts hexadecimal to bytes in returning a blob:
   function hexToBytes(hex) {
-    for (var bytes = [], c = 0; c < hex.length; c += 2)
-    bytes.push(parseInt(hex.substr(c, 2), 16));
-    return bytes;
-}
-
-  // when the socket is opened:
-  socket.onopen = function() {
-    socket.send(hexToBytes("0"));
-    socket.send(hexToBytes("3"));
-    var hex = "313c89a12cab56ce872744d2d7e144ce";
-    //conversion to a binary array:
+    // conversion to a binary array:
     var byteArray = new Uint8Array(hex.length/2);
     for (var i = 0; i < byteArray.length; i++) {
       byteArray[i] = parseInt(hex.substr(i*2, 2), 16);
     }
     // create a blob used to send the data:
-    var blob = new Blob([byteArray], {type: "application/octet-stream"});
-    socket.send(blob);
-    console.log(blob);
+    return new Blob([byteArray], {type: "application/octet-stream"});
+}
+
+  // when the socket is opened (reaction):
+  socket.onopen = function() {
+    socket.send(hexToBytes("0003"));
+    var bytes = hexToBytes("313c89a12cab56ce872744d2d7e144ce");
+    socket.send(bytes);
+    console.log(bytes);
   }
   socket.onmessage = function(e) { // traite le message reçu et l'affiche dans la console
     console.log(e.data);
