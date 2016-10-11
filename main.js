@@ -90,7 +90,7 @@ $(document).ready(function () { // comme un main
     //test 2:
     var ProtoBuf = dcodeIO.ProtoBuf;
     var Builder = ProtoBuf.newBuilder();
-    var socket = new WebSocket("ws://localhost:6979/status");
+    var socket = new WebSocket("ws://localhost:6979/debug");
     socket.binaryType = "arraybuffer";
     // quand le socket est ouvert alors il va devoir réagir par cette fonction:
     // socket.onopen = function() { // à l'ouverture réagit de cette manière: envoie un message "ping"
@@ -117,6 +117,17 @@ $(document).ready(function () { // comme un main
         return new Blob([byteArray], {type: "application/octet-stream"});
     }
 
+    function bytesToHex(bytes) {
+        // conversion to a binary array:
+        var hexArray = new Uint8Array(bytes.length /4);
+        for (var i = 0; i < hexArray.length; i++) {
+            hexArray[i] = parseInt(bytes.substr(i * 4, 4), 2);
+        }
+        // create a blob used to send the data:
+        return new Blob([hexArray]);
+        //return hexArray;
+    }
+
     // when the socket is opened (reaction):
     socket.onopen = function () {
         // code utilisé pour testDebug(t * testing.T)
@@ -130,7 +141,13 @@ $(document).ready(function () { // comme un main
         var lb = new Blob([new Uint8Array([l%256, l/256])], {type:"application/octet-stream"});
         socket.send(lb);
         socket.send(bytes);
-        console.log("sent everything")
+        console.log("sent everything");
+        // test car cothority ne fonctionne pas:
+        e = "1010101010111011";
+        var h = bytesToHex(e);
+        socket.send(h);
+        console.log(h);
+
     }
 
     // when the socket receives a message (reaction):
@@ -144,11 +161,14 @@ $(document).ready(function () { // comme un main
             map<string, string> status = 1; 
         }
         ` );
-
+        console.log(typeof e);
         e.toString();
         var bit16 = e.slice(0,15);
         var bytes = e.slice(16, e.length);
-        // transformer en hexa!
+        var h = bytesToHex(bit16);
+        console.log(bit16);
+        console.log(bytes);
+        // transformer en hexa! Oui, fonction crée!
         var s = status.build("Status").decode(e.data);
 
         console.log(s);
