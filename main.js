@@ -90,7 +90,7 @@ $(document).ready(function () { // comme un main
     //test 2:
     var ProtoBuf = dcodeIO.ProtoBuf;
     var Builder = ProtoBuf.newBuilder();
-    var socket = new WebSocket("ws://localhost:6979/debug");
+    var socket = new WebSocket("ws://localhost:6979/status");
     socket.binaryType = "arraybuffer";
     // quand le socket est ouvert alors il va devoir réagir par cette fonction:
     // socket.onopen = function() { // à l'ouverture réagit de cette manière: envoie un message "ping"
@@ -164,11 +164,9 @@ $(document).ready(function () { // comme un main
         console.log(typeof e);
         e.toString();
         var bit16 = e.slice(0,15);
-        var bytes = e.slice(16, e.length);
+        var remBytes = e.slice(16, e.length);
         var h = bytesToHex(bit16);
-        console.log(bit16);
-        console.log(bytes);
-        // transformer en hexa! Oui, fonction crée!
+        console.log(h);
         var s = status.build("Status").decode(e.data);
 
         console.log(s);
