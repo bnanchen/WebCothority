@@ -28,7 +28,7 @@ $("#toDelete").on("click", function (event) {
 /**
  * MAIN
  */
-$(document).ready(function () { // comme un main
+$(document).ready(function () {
     // appelle la fonction udpateList() toutes les 3 secondes:
     setInterval(function () {
         update()
@@ -41,53 +41,6 @@ $(document).ready(function () { // comme un main
         console.log("Hello World!");
     });
 
-    // Test 1: (ne fonctionne pas)
-    //     var ProtoBuf = dcodeIO.ProtoBuf; // dcodeIO is not defined
-    //     if (typeof dcodeIO === 'undefined' || !dcodeIO.ProtoBuf) {
-    //       throw(new Error("Protobuf.js is not present. Try manual setup!"));
-    //     }
-    //     // test avec bouton hello world
-    //     $("#hello").on("click", send());
-    //     // Initialize Protobuf.js
-    //     var ProtoBuf = dcodeIO.ProtoBuf;
-    //     var Message = ProtoBuf.loadProtoFile("./example.proto").build("Message");
-    //     // Connect to our server: node server.js
-    //     var socket = new WebSocket("ws://localhost:8080/ws");
-    //     socket.binaryType = "arraybuffer";
-    //
-    //     function send() {
-    //       if (socket.readyState == WebSocket.OPEN) {
-    //         var msg = new Message(text.value);
-    //         socket.send(msg.toArrayBuffer());
-    //         log.value += "Sent: "+ msg.text +"\n";
-    //       } else {
-    //         log.value += "Not connected\n";
-    //       }
-    //     }
-    //
-    //     socket.onopen = function() {
-    //       log.value += "Connected\n";
-    //     };
-    //
-    //     socket.onclose = function() {
-    //       log.value += "Disconnected\n";
-    //     };
-    //
-    //     socket.onmessage = function(evt) {
-    //       try {
-    //         // Decode the Message
-    //         var msg = Message.decode(evt.data);
-    //         log.value += "Received: "+ msg.text+"\n";
-    //       } catch (err) {
-    //         log.value += "Error: "+err+"\n";
-    //       }
-    //     }
-    //
-    // });
-    //
-    // log.value = ""; // Clear log on reload
-
-    //test 2:
     var ProtoBuf = dcodeIO.ProtoBuf;
     var Builder = ProtoBuf.newBuilder();
     var socket = new WebSocket("ws://localhost:6979/status");
@@ -117,15 +70,28 @@ $(document).ready(function () { // comme un main
         return new Blob([byteArray], {type: "application/octet-stream"});
     }
 
+    /*****************************************/
+    /**
+     * converts bytes to hexadecimal in returning a blob:
+     */
     function bytesToHex(bytes) {
         // conversion to a binary array:
         var hexArray = new Uint8Array(bytes.length /4);
         for (var i = 0; i < hexArray.length; i++) {
+            // conversion du string en hexadecimal avec parseInt:
             hexArray[i] = parseInt(bytes.substr(i * 4, 4), 2);
         }
         // create a blob used to send the data:
-        return new Blob([hexArray]);
-        //return hexArray;
+        //return new Blob([hexArray]);
+        return hexArray;
+    }
+
+    /*****************************************/
+    /**
+     * converts an ArrayBuffer to a String:
+     */
+    function ab2str(buf) {
+        return String.fromCharCode.apply(null, new Uint16Array(buf));
     }
 
     // when the socket is opened (reaction):
@@ -142,31 +108,27 @@ $(document).ready(function () { // comme un main
         socket.send(lb);
         socket.send(bytes);
         console.log("sent everything");
-        // test car cothority ne fonctionne pas:
-        e = "1010101010111011";
-        var h = bytesToHex(e);
-        socket.send(h);
-        console.log(h);
-
     }
 
     // when the socket receives a message (reaction):
     socket.onmessage = function (e) {
-        //console.log("receiving")
-        //buffer = new Uint8Array(e.data);
-        //console.log(e.data);
-        //socket.send("ping");
         var status = ProtoBuf.loadProto(`
         message Status {
             map<string, string> status = 1; 
         }
         ` );
-        console.log(typeof e);
-        e.toString();
-        var bit16 = e.slice(0,15);
-        var remBytes = e.slice(16, e.length);
+        var eString = ab2str(e.data);
+        var bit16 = eString.slice(0,15);
+        var bitRem = eString.slice(16, eString.length);
+        console.log(bit16);
         var h = bytesToHex(bit16);
         console.log(h);
+        // manière pour afficher dans la console un blob:
+        /*var myReader = new FileReader();
+        myReader.onload = function(event){
+            console.log(JSON.stringify(myReader.result));
+        };
+        myReader.readAsText(h);*/
         var s = status.build("Status").decode(e.data);
 
         console.log(s);
