@@ -43,7 +43,7 @@ $(document).ready(function () {
 
     var ProtoBuf = dcodeIO.ProtoBuf;
     var Builder = ProtoBuf.newBuilder();
-    var socket = new WebSocket("ws://localhost:6979/status");
+    var socket = new WebSocket("ws://localhost:7101/status");
     socket.binaryType = "arraybuffer";
     // quand le socket est ouvert alors il va devoir réagir par cette fonction:
     // socket.onopen = function() { // à l'ouverture réagit de cette manière: envoie un message "ping"
@@ -70,20 +70,28 @@ $(document).ready(function () {
         return new Blob([byteArray], {type: "application/octet-stream"});
     }
 
+    function hexToBytesX(hex) {
+        // conversion to a binary array:
+        var byteArray = new Uint8Array(hex.length / 2);
+        for (var i = 0; i < byteArray.length; i++) {
+            // conversion du string en bits avec parseInt:
+            byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
+        }
+        // create a blob used to send the data:
+        return byteArray;
+    }
     /*****************************************/
     /**
      * converts bytes to hexadecimal in returning a blob:
      */
-    function bytesToHex(bytes) {
-        // conversion to a binary array:
-        var hexArray = new Uint8Array(bytes.length /4);
-        for (var i = 0; i < hexArray.length; i++) {
-            // conversion du string en hexadecimal avec parseInt:
-            hexArray[i] = parseInt(bytes.substr(i * 4, 4), 2);
+    function bytesToHex(byteArray) {
+        // conversion to a binary b:
+        var ua = new Uint8Array(byteArray);
+        var h = '0x';
+        for (var i = 0; i < ua.length; i++) {
+            h += ("0"+ ua[i].toString(16)).slice(-2)+ " ";
         }
-        // create a blob used to send the data:
-        //return new Blob([hexArray]);
-        return hexArray;
+        return h;
     }
 
     /*****************************************/
@@ -113,15 +121,19 @@ $(document).ready(function () {
     // when the socket receives a message (reaction):
     socket.onmessage = function (e) {
         var status = ProtoBuf.loadProto(`
+        message Module {
+            map<string, string> module = 1; 
+        }
         message Status {
-            map<string, string> status = 1; 
+            map<string, Module> Status = 1; 
         }
         ` );
-        var eString = ab2str(e.data);
-        var bit16 = eString.slice(0,15);
-        var bitRem = eString.slice(16, eString.length);
-        console.log(bit16);
-        var h = bytesToHex(bit16);
+
+        var byte16 = e.data.slice(0,15);
+        var byteRem = e.data.slice(16, e.data.byteLength);
+        console.log(e.data.byteLength);
+        console.log(byte16);
+        var h = bytesToHex(byteRem);
         console.log(h);
         // manière pour afficher dans la console un blob:
         /*var myReader = new FileReader();
@@ -129,8 +141,7 @@ $(document).ready(function () {
             console.log(JSON.stringify(myReader.result));
         };
         myReader.readAsText(h);*/
-        var s = status.build("Status").decode(e.data);
-
+        var s = status.build("Status").decode(byteRem);
         console.log(s);
     };
 
