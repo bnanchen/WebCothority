@@ -2,11 +2,8 @@
  * File with useful methods concerning Protobuf.
  */
 
-function protobufInst(portNumber) {
-    var ProtoBuf = dcodeIO.ProtoBuf;
-    var Builder = ProtoBuf.newBuilder();
-    var socket = new WebSocket("ws://localhost:" + portNumber + "/status");
-    socket.binaryType = "arraybuffer";
+function websocket() {
+    protobufOp(7101);
 
     // when the socket is opened (reaction):
     socket.onopen = function () {
@@ -32,10 +29,23 @@ function protobufInst(portNumber) {
         var byte16 = e.data.slice(0, 15);
         var byteRem = e.data.slice(16, e.data.byteLength);
         console.log(e.data.byteLength);
-        console.log(byte16);
-        var h = bytesToHex(byteRem);
-        console.log(h);
-        var s = status.build("Status").decode(byteRem);
-        console.log(s);
+        var returnedMessage = status.build("Status").decode(byteRem); // not assigned
+        //console.log(returnedMessage);
+    }
+
+}
+
+/**
+ * Open a WebSocket and instantiate the Protobuf
+ *
+ * @portNumber the port number where the WebSocket need to connect
+ */
+function protobufOp(portNumber) {
+    var ProtoBuf = dcodeIO.ProtoBuf;
+    var Builder = ProtoBuf.newBuilder();
+    var socket = new WebSocket("ws://localhost:" + portNumber + "/status");
+    socket.binaryType = "arraybuffer";
+    if (socket.readyState != 1) {
+        console.log("The opening of the WebSocket doesn't go well. Ready State constant:"+ socket.readyState);
     }
 }
