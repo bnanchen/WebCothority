@@ -2,7 +2,7 @@
 * fonction de mise à jour des données de la page
 */
 function update() {
-  var list = updateList();
+  var list = updateListOld();
   var numberBandwidth = 0;
   $("#numberNodes").html(list.length);
   for (var i = 0; i < list.length; i++) {

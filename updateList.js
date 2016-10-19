@@ -24,7 +24,7 @@ var set_3 = [node_3, node_4, node_5, node_6];
 /*****************************************//**
 * fonction de mise à jour de la liste des noeuds actifs
 */
-function updateList() {
+function updateListOld() {
   var chosenSetNumber = Math.floor(Math.random() * 3);
   var chosenSet;
   switch (chosenSetNumber) {
@@ -37,4 +37,8 @@ function updateList() {
     default: alert("Problème dans la fonction updateList: nombre non-compris entre 0 et 2");
     }
     return chosenSet;
+}
+
+function udpateList() {
+  // nouveau
 }
