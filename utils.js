@@ -2,7 +2,7 @@
  * File with useful methods for the project.
  */
 
-/**
+/**		  /**
  * converts hexadecimal to bytes in returning a blob
  * @return Blob
  */
@@ -13,7 +13,7 @@ function hexToBytes(hex) {
         // conversion du string en bits avec parseInt:
         byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
     }
-    // create a blob used to send the data:
+    // create a blob used to send the data:		     
     return new Blob([byteArray], {type: "application/octet-stream"});
 }
 
@@ -32,13 +32,12 @@ function bytesToHex(byteArray) {
 }
 
 function hexToBytesX(hex) {
-   // conversion to a binary array:
-       var byteArray = new Uint8Array(hex.length / 2);
-   for (var i = 0; i < byteArray.length; i++) {
-         // conversion du string en bits avec parseInt:
-           byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
-       }
-       // create a blob used to send the data:
-       return byteArray;
+    // conversion to a binary array:
+    var byteArray = new Uint8Array(hex.length / 2);
+    for (var i = 0; i < byteArray.length; i++) {
+        // conversion du string en bits avec parseInt:
+        byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
+    }
+    // create a blob used to send the data:
+    return byteArray;
 }
-
