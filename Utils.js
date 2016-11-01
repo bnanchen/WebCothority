@@ -3,7 +3,8 @@
  */
 
 /**
- * converts hexadecimal to bytes in returning a blob:
+ * converts hexadecimal to bytes in returning a blob
+ * @return Blob
  */
 function hexToBytes(hex) {
     // conversion to a binary array:
@@ -17,7 +18,8 @@ function hexToBytes(hex) {
 }
 
 /**
- * converts bytes to hexadecimal in returning a blob:
+ * converts bytes to hexadecimal
+ * @return Uint8Array
  */
 function bytesToHex(byteArray) {
     // conversion to a binary b:
@@ -27,5 +29,16 @@ function bytesToHex(byteArray) {
         h += ("0"+ ua[i].toString(16)).slice(-2)+ " ";
     }
     return h;
+}
+
+function hexToBytesX(hex) {
+   // conversion to a binary array:
+       var byteArray = new Uint8Array(hex.length / 2);
+   for (var i = 0; i < byteArray.length; i++) {
+         // conversion du string en bits avec parseInt:
+           byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
+       }
+       // create a blob used to send the data:
+       return byteArray;
 }
 
