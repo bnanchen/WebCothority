@@ -56,33 +56,18 @@ function updateListOld() {
 /**
  * Generator
  */
-function updateList(portNumber) { // mettre en async si dispo: chrome 55
+function updateList() { // mettre en async si dispo: chrome 55
     //var a = websocket(7101);
     //console.log(a);
     runGenerator(function* bonjour() {
         var listNodes = [];
-        var message = yield websocket(portNumber);
+        var message = yield websocket(7101);
         listNodes.push(nodeCreation(message));
         message = yield websocket(7102);
         listNodes.push(nodeCreation(message));
         message = yield  websocket(7103);
         listNodes.push(nodeCreation(message));
-
-        var numberBandwidth = 0;
-        $("#numberNodes").html(listNodes.length);
-        for (var i = 0; i < listNodes.length; i++) {
-            numberBandwidth += (listNodes[i].rx_bytes + listNodes[i].tx_bytes);
-        }
-        $("#numberBandwidth").html(numberBandwidth);
-
-        //updateTable
-        $("#status td").each(function() {
-           this.remove();
-        });
-        var table = $("#status");
-        $.each(listNodes, function(i, val) {
-            table.append("<tr><td>"+ val.available_services +"</td><td>"+ val.connType +"</td><td>"+ val.port +"</td><td>"+ val.rx_bytes +"</td><td>"+ val.tx_bytes +"</td><td>"+ val.version +"</td></tr>");
-        });
+        update(listNodes);
        /* $("#status td").each(function() {
             this.remove();
         });
