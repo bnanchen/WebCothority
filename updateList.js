@@ -34,6 +34,7 @@ function node(available_services, connType, description, host, port, rx_bytes, s
     this.version = version;
 }
 
+
 /**
 * fonction de mise à jour de la liste des noeuds actifs
 */
@@ -55,14 +56,71 @@ function updateListOld() {
 /**
  * Generator
  */
-function updateList() { // mettre en async si dispo: chrome 55
+function updateList(portNumber) { // mettre en async si dispo: chrome 55
     //var a = websocket(7101);
     //console.log(a);
     runGenerator(function* bonjour() {
-      var a = yield websocket(7101);
-      var node = helpUpdateList(a);
-      console.log(node);
+        var listNodes = [];
+        var message = yield websocket(portNumber);
+        listNodes.push(nodeCreation(message));
+        message = yield websocket(7102);
+        listNodes.push(nodeCreation(message));
+        message = yield  websocket(7103);
+        listNodes.push(nodeCreation(message));
+
+        var numberBandwidth = 0;
+        $("#numberNodes").html(listNodes.length);
+        for (var i = 0; i < listNodes.length; i++) {
+            numberBandwidth += (listNodes[i].rx_bytes + listNodes[i].tx_bytes);
+        }
+        $("#numberBandwidth").html(numberBandwidth);
+
+        //updateTable
+        $("#status td").each(function() {
+           this.remove();
+        });
+        var table = $("#status");
+        $.each(listNodes, function(i, val) {
+            table.append("<tr><td>"+ val.available_services +"</td><td>"+ val.connType +"</td><td>"+ val.port +"</td><td>"+ val.rx_bytes +"</td><td>"+ val.tx_bytes +"</td><td>"+ val.version +"</td></tr>");
+        });
+       /* $("#status td").each(function() {
+            this.remove();
+        });
+        var table = $("#status");
+        table.append("<tr><td>"+ node.available_services +"</td><td>"+ node.connType +"</td><td>"+ node.port +"</td><td>"+ node.rx_bytes +"</td><td>"+ node.tx_bytes +"</td><td>"+ node.version +"</td></tr>");*/
     });
+}
+
+function nodeCreation(message) {
+    // must put the constructor inside runGenerator(g) because overshadowing
+    function node(available_services, connType, description, host, port, rx_bytes, system, tx_bytes, uptime, version) {
+        this.available_services = available_services;
+        this.connType = connType;
+        this.description = description;
+        this.host = host;
+        this.port = port;
+        this.rx_bytes = rx_bytes; // reception
+        this.system = system;
+        this.tx_bytes = tx_bytes; // envoi
+        this.uptime = uptime;
+        this.version = version;
+    }
+
+    var node = new node(
+        message.Status.map.Status.value.module.map.Available_Services.value,
+        message.Status.map.Status.value.module.map.ConnType.value,
+        message.Status.map.Status.value.module.map.Description.value,
+        message.Status.map.Status.value.module.map.Host.value,
+        message.Status.map.Status.value.module.map.Port.value,
+        message.Status.map.Status.value.module.map.RX_bytes.value,
+        message.Status.map.Status.value.module.map.System.value,
+        message.Status.map.Status.value.module.map.TX_bytes.value,
+        message.Status.map.Status.value.module.map.Uptime.value,
+        message.Status.map.Status.value.module.map.Version.value
+    );
+    console.log(message.Status.map.Status.value.module.map.Available_Services.value);
+    console.log(node);
+    return node;
 }
 
 function helpUpdateList(message) {

@@ -2,7 +2,7 @@
 * fonction de mise à jour des données de la page
 */
 function update() {
-    updateList();
+    updateList(7101);
     var list = updateListOld();
     var numberBandwidth = 0;
     $("#numberNodes").html(list.length);
@@ -10,7 +10,7 @@ function update() {
         numberBandwidth += list[i].bandwidth_used;
     }
     $("#numberBandwidth").html(numberBandwidth);
-    updateTable(list);
+    //updateTable(list);
 }
 
 /*****************************************//**
