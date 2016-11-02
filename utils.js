@@ -13,7 +13,7 @@ function hexToBytes(hex) {
         // conversion du string en bits avec parseInt:
         byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
     }
-    // create a blob used to send the data:		     
+    // create a blob used to send the data:
     return new Blob([byteArray], {type: "application/octet-stream"});
 }
 

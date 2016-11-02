@@ -53,12 +53,34 @@ function updateListOld() {
 }
 
 /**
- *
+ * Generator
  */
-function updateList() {
-    var p = new Promise(function (resolve, reject) {
-        var setNodes = [];
-        for(var i = 7001; i <= 7003; i++) {
+function updateList() { // mettre en async si dispo: chrome 55
+    //var a = websocket(7101);
+    //console.log(a);
+    runGenerator(function* bonjour() {
+      var a = yield websocket(7101);
+      var node = helpUpdateList(a);
+      console.log(node);
+    });
+}
+
+function helpUpdateList(message) {
+    var node = new node( message.Status.map.Status.value.module.map.Available_Services,
+        message.Status.map.Status.value.module.map.ConnType.value,
+        message.Status.map.Status.value.module.map.Description.value,
+        message.Status.map.Status.value.module.map.Host.value,
+        message.Status.map.Status.value.module.map.Port.value,
+        message.Status.map.Status.value.module.map.RX_bytes.value,
+        message.Status.map.Status.value.module.map.System.value,
+        message.Status.map.Status.value.module.map.TX_bytes.value,
+        message.Status.map.Status.value.module.map.Uptime.value,
+        message.Status.map.Status.value.module.map.Version.value);
+        return node;
+}
+    //var p = new Promise(function (resolve, reject) {
+      //  var setNodes = [];
+        /*for(var i = 7001; i <= 7003; i++) {
             websocket(i).then(function (message) {
                 var node = new node( message.Status.map.Status.value.module.map.Available_Services,
                     message.Status.map.Status.value.module.map.ConnType.value,
@@ -74,9 +96,9 @@ function updateList() {
                 return node;
             }).then(function (node) {
                 setNodes.push(node);
-            });
-        }
-    });
-    console.log(setNodes); // not defined
-    return p;
-}
+            });*/
+        //}
+    //});
+    //console.log(setNodes); // not defined
+    //return p;
+//}
