@@ -1,11 +1,11 @@
 // constructeur pour les noeuds:
 function nodeOld(name, ip, portNumber, uptime, bandwidth_used, number_services) {
-  this.name = name;
-  this.ip = ip;
-  this.portNumber = portNumber;
-  this.uptime = uptime;
-  this.bandwidth_used = bandwidth_used;
-  this.number_services = number_services;
+    this.name = name;
+    this.ip = ip;
+    this.portNumber = portNumber;
+    this.uptime = uptime;
+    this.bandwidth_used = bandwidth_used;
+    this.number_services = number_services;
 }
 
 // listes des noeuds:
@@ -36,8 +36,8 @@ function node(available_services, connType, description, host, port, rx_bytes, s
 
 
 /**
-* fonction de mise à jour de la liste des noeuds actifs
-*/
+ * fonction de mise à jour de la liste des noeuds actifs
+ */
 function updateListOld() {
     var chosenSetNumber = Math.floor(Math.random() * 3);
     var chosenSet;
@@ -68,11 +68,6 @@ function updateList() { // mettre en async si dispo: chrome 55
         message = yield  websocket(7103);
         listNodes.push(nodeCreation(message));
         update(listNodes);
-       /* $("#status td").each(function() {
-            this.remove();
-        });
-        var table = $("#status");
-        table.append("<tr><td>"+ node.available_services +"</td><td>"+ node.connType +"</td><td>"+ node.port +"</td><td>"+ node.rx_bytes +"</td><td>"+ node.tx_bytes +"</td><td>"+ node.version +"</td></tr>");*/
     });
 }
 
@@ -107,41 +102,3 @@ function nodeCreation(message) {
     console.log(node);
     return node;
 }
-
-function helpUpdateList(message) {
-    var node = new node( message.Status.map.Status.value.module.map.Available_Services,
-        message.Status.map.Status.value.module.map.ConnType.value,
-        message.Status.map.Status.value.module.map.Description.value,
-        message.Status.map.Status.value.module.map.Host.value,
-        message.Status.map.Status.value.module.map.Port.value,
-        message.Status.map.Status.value.module.map.RX_bytes.value,
-        message.Status.map.Status.value.module.map.System.value,
-        message.Status.map.Status.value.module.map.TX_bytes.value,
-        message.Status.map.Status.value.module.map.Uptime.value,
-        message.Status.map.Status.value.module.map.Version.value);
-        return node;
-}
-    //var p = new Promise(function (resolve, reject) {
-      //  var setNodes = [];
-        /*for(var i = 7001; i <= 7003; i++) {
-            websocket(i).then(function (message) {
-                var node = new node( message.Status.map.Status.value.module.map.Available_Services,
-                    message.Status.map.Status.value.module.map.ConnType.value,
-                    message.Status.map.Status.value.module.map.Description.value,
-                    message.Status.map.Status.value.module.map.Host.value,
-                    message.Status.map.Status.value.module.map.Port.value,
-                    message.Status.map.Status.value.module.map.RX_bytes.value,
-                    message.Status.map.Status.value.module.map.System.value,
-                    message.Status.map.Status.value.module.map.TX_bytes.value,
-                    message.Status.map.Status.value.module.map.Uptime.value,
-                    message.Status.map.Status.value.module.map.Version.value);
-                console.log(node);
-                return node;
-            }).then(function (node) {
-                setNodes.push(node);
-            });*/
-        //}
-    //});
-    //console.log(setNodes); // not defined
-    //return p;
-//}
