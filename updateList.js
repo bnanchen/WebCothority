@@ -1,3 +1,4 @@
+//========================================================OLD VERSION===================================================
 // constructeur pour les noeuds:
 function nodeOld(name, ip, portNumber, uptime, bandwidth_used, number_services) {
     this.name = name;
@@ -21,20 +22,6 @@ var set_1 = [node_1, node_3, node_4, node_5];
 var set_2 = [node_2, node_4, node_6];
 var set_3 = [node_3, node_4, node_5, node_6];
 
-function node(available_services, connType, description, host, port, rx_bytes, system, tx_bytes, uptime, version) {
-    this.available_services = available_services;
-    this.connType = connType;
-    this.description = description;
-    this.host = host;
-    this.port = port;
-    this.rx_bytes = rx_bytes; // reception
-    this.system = system;
-    this.tx_bytes = tx_bytes; // envoi
-    this.uptime = uptime;
-    this.version = version;
-}
-
-
 /**
  * fonction de mise à jour de la liste des noeuds actifs
  */
@@ -51,6 +38,21 @@ function updateListOld() {
         default: alert("Problème dans la fonction updateList: nombre non-compris entre 0 et 2");
     }
     return chosenSet;
+}
+
+//======================================================================================================================
+
+function node(available_services, connType, description, host, port, rx_bytes, system, tx_bytes, uptime, version) {
+    this.available_services = available_services;
+    this.connType = connType;
+    this.description = description;
+    this.host = host;
+    this.port = port;
+    this.rx_bytes = rx_bytes; // reception
+    this.system = system;
+    this.tx_bytes = tx_bytes; // envoi
+    this.uptime = uptime;
+    this.version = version;
 }
 
 /**

@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
     <!-- Custom styles for this template -->
     <link href="theme.css" rel="stylesheet">
@@ -24,6 +25,13 @@
     <script src="long.min.js"></script>
     <script src="bytebuffer.min.js"></script>
     <script src="protobuf.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="jquery.js"></script>
+
+    <!-- fileinput -->
+    <script src="fileinput.min.js"></script>
+
 </head>
 <body>
 <!--barre supérieure noire -->
@@ -80,14 +88,40 @@
 <br>
 <button id="hello">Hello World!</button>
 
+<!-- TODO file importation from computer -->
+<!--
+<p>Please, select a file which will be uploaded and collectively signed by the cothority.
+</p>
+<label class="control-label">Select File</label>
+<div class="upload_container">
+    <form enctype="multipart/form-data" action="sign" method="post">
+        <input id="file-sign" name="file-sign" class="file" type="file" data-max-file-count="1">
+        <br>
+    </form>
+</div>
+<div id="signature_result" style="display: none;">
+    <h4>Signature &nbsp;<i title="Verified" class="glyphicon glyphicon-thumbs-up" style="color: green;"></i></h4>
+    <a id="download_sig" href="" download="" class="btn btn-default">
+        <span class="glyphicon glyphicon-download"></span>&nbspDownload Signature
+    </a>
+    <pre id="json"></pre>
+</div>
+-->
+<br>
+<label class="control-label">Select File</label>
+<form id="form_file" enctype="multipart/form-data" method="post">
+    <input id="file-sign" type="file" class="file" data-show-preview="false">
+</form>
 
 <!-- javascript -->
-<script src="jquery.js"></script>
+
 <script src="main.js"></script>
 <script src="updateList.js"></script>
 <script src="update.js"></script>
 <script src="utils.js"></script>
 <script src="web.js"></script>
+<script src="file_utils.js"></script>
+<script src="sign.js"></script>
 <!-- nacl-js -->
 <script src="nacl_cooked.js"></script>
 <!-- Bootstrap core JavaScript
