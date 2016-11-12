@@ -1,0 +1,374 @@
+Last login: Thu Sep 29 11:20:27 on ttys002
+Macintosh-3:examples bastiannanchen$ cd
+Macintosh-3:~ bastiannanchen$ brew install golang
+==> Auto-updated Homebrew!
+Updated 2 taps (homebrew/core, homebrew/science).
+==> New Formulae
+compose2kube                   gofabric8                      httpdiff                       linkerd                      
+==> Updated Formulae
+abcm2ps                        gnu-units                      libqalculate                   quantlib                     
+abook                          gnuplot                        libreadline-java               rainbarf                     
+agedu                          gpgme                          libressl                       rancher-compose              
+airspy                         gphoto2                        libyaml                        readline ✔                   
+akka                           gqlplus                        lldpd                          redis                        
+ansifilter                     groonga                        lnav                           renameutils                  
+antigen                        gssh                           mas                            repo                         
+argus-clients                  guile                          mdbtools                       rlwrap                       
+argyll-cms                     harfbuzz ✔                     mdk                            rtv                          
+augeas                         haskell-stack                  mesos                          ruby                         
+aws-sdk-cpp                    hh                             mobile-shell                   sdcv                         
+awscli                         highlight                      monetdb                        sfcgal                       
+azure-cli                      homebrew/science/abinit        mpfr ✔                         shyaml                       
+bacula-fd                      homebrew/science/asl           nanopb-generator               socat                        
+bash                           homebrew/science/exabayes      ncmpcpp                        sourcekitten                 
+bind                           homebrew/science/gap           neo4j                          spdylay                      
+bmake                          homebrew/science/graph-tool    newlisp                        spidermonkey                 
+cadaver                        homebrew/science/igv           nghttp2                        sqlite ✔                     
+cake                           homebrew/science/igvtools      nickle                         storm                        
+calc                           homebrew/science/nextflow      node ✔                         stunnel                      
+certigo                        homebrew/science/nip2          node-build                     supersonic                   
+cgal                           homebrew/science/radx          nsd                            swi-prolog                   
+cgdb                           homebrew/science/samblaster    ola                            szl                          
+chaiscript                     homebrew/science/sortmerna     open-babel                     tailor                       
+citus                          homebrew/science/vips ✔        opendbx                        takt                         
+clisp                          homebrew/science/vsearch       openjpeg                       tarantool                    
+consul-template                homebrew/science/vtk           openshift-cli                  tbb                          
+cromwell                       httpstat                       openssl ✔                      the_silver_searcher          
+dash                           hunspell                       openssl@1.1                    tig                          
+ddar                           internetarchive                osm-pbf                        tor                          
+devd                           jena                           parallel                       upscaledb                    
+devtodo                        jetty                          pcb2gcode                      varnish                      
+discount                       jruby                          pce                            vdirsyncer                   
+dmd                            jsoncpp                        pdsh                           vim                          
+docker-machine                 jsonschema2pojo                pgrouting                      wellington                   
+dwarf                          kapacitor                      plowshare                      wildfly-as                   
+ejabberd                       kes                            pod2man                        with-readline                
+ekg2                           khal                           ponyc                          wolfssl                      
+erlang                         khard                          postgis                        xonsh                        
+fobis                          kobalt                         postgres-xc                    yafc                         
+fwup                           kpcli                          postgresql                     yash                         
+fzf                            kubernetes-cli                 privoxy                        yle-dl                       
+gawk                           launch                         profanity                      you-get                      
+ginac                          ldapvi                         protobuf                       youtube-dl                   
+git-annex                      lean-cli                       protobuf-c                     zbackup                      
+git-imerge                     legit                          protobuf-swift                 zpaq                         
+gitlab-ci-multi-runner         leiningen                      purescript                     zplug                        
+gjs                            libass                         pwsafe                         zsh-navigation-tools         
+gjstest                        libgda                         pyenv                        
+gnu-apl                        libphonenumber                 python ✔                     
+gnu-smalltalk                  libpointing                    python3                      
+==> Deleted Formulae
+aeskeyfind                     aget                           caudec                         sgfutils                     
+
+==> Downloading https://homebrew.bintray.com/bottles/go-1.7.1.sierra.bottle.tar.gz
+######################################################################## 100.0%
+==> Pouring go-1.7.1.sierra.bottle.tar.gz
+==> Caveats
+As of go 1.2, a valid GOPATH is required to use the `go get` command:
+  https://golang.org/doc/code.html#GOPATH
+
+You may wish to add the GOROOT-based install location to your PATH:
+  export PATH=$PATH:/usr/local/opt/go/libexec/bin
+==> Summary
+🍺  /usr/local/Cellar/go/1.7.1: 6,436 files, 250.6M
+Macintosh-3:~ bastiannanchen$ ls
+Applications	Documents	Doxyfile	EPFL		Google Drive	Movies		Pictures	Public
+Desktop		Downloads	Dropbox		Enregistrement	Library		Music		Programmation	Sites
+Macintosh-3:~ bastiannanchen$ bi .bas
+Macintosh-3:~ bastiannanchen$ vi .bash_
+.bash_history                .bash_profile                .bash_profile-anaconda3.bak  .bash_profile.save           .bash_sessions/              
+Macintosh-3:~ bastiannanchen$ vi .bash_profile
+Macintosh-3:~ bastiannanchen$ . .bash_profile
+Macintosh-3:~ bastiannanchen$ go
+Go is a tool for managing Go source code.
+
+Usage:
+
+	go command [arguments]
+
+The commands are:
+
+	build       compile packages and dependencies
+	clean       remove object files
+	doc         show documentation for package or symbol
+	env         print Go environment information
+	fix         run go tool fix on packages
+	fmt         run gofmt on package sources
+	generate    generate Go files by processing source
+	get         download and install packages and dependencies
+	install     compile and install packages and dependencies
+	list        list packages
+	run         compile and run Go program
+	test        test packages
+	tool        run specified go tool
+	version     print Go version
+	vet         run go tool vet on packages
+
+Use "go help [command]" for more information about a command.
+
+Additional help topics:
+
+	c           calling between Go and C
+	buildmode   description of build modes
+	filetype    file types
+	gopath      GOPATH environment variable
+	environment environment variables
+	importpath  import path syntax
+	packages    description of package lists
+	testflag    description of testing flags
+	testfunc    description of testing functions
+
+Use "go help [topic]" for more information about that topic.
+
+Macintosh-3:~ bastiannanchen$ go get github.com/dedis/cothority
+Macintosh-3:~ bastiannanchen$ ln -s cd go/src/github.com/dedis/cothority/ cothority
+ln: cothority: No such file or directory
+Macintosh-3:~ bastiannanchen$ ln -s go/src/github.com/dedis/cothority/ cothority
+Macintosh-3:~ bastiannanchen$ cd cothority
+Macintosh-3:cothority bastiannanchen$ ls
+CHANGELOG		Makefile		coveralls.sh		errcheck.sh		lint.sh			network			services
+Deterlab.md		README.md		crypto			gofmt.sh		log			protocols		simul
+LICENSE			app			doc.go			install.sh		monitor			sda			test_integration.sh
+Macintosh-3:cothority bastiannanchen$ go get -v ./...
+github.com/BurntSushi/toml (download)
+github.com/daviddengcn/go-colortext (download)
+^C
+Macintosh-3:cothority bastiannanchen$ go get -vt ./...
+flag provided but not defined: -vt
+usage: get [-d] [-f] [-fix] [-insecure] [-t] [-u] [build flags] [packages]
+
+Get downloads the packages named by the import paths, along with their
+dependencies. It then installs the named packages, like 'go install'.
+
+The -d flag instructs get to stop after downloading the packages; that is,
+it instructs get not to install the packages.
+
+The -f flag, valid only when -u is set, forces get -u not to verify that
+each package has been checked out from the source control repository
+implied by its import path. This can be useful if the source is a local fork
+of the original.
+
+The -fix flag instructs get to run the fix tool on the downloaded packages
+before resolving dependencies or building the code.
+
+The -insecure flag permits fetching from repositories and resolving
+custom domains using insecure schemes such as HTTP. Use with caution.
+
+The -t flag instructs get to also download the packages required to build
+the tests for the specified packages.
+
+The -u flag instructs get to use the network to update the named packages
+and their dependencies.  By default, get uses the network to check out
+missing packages but does not use it to look for updates to existing packages.
+
+Get also accepts build flags to control the installation. See 'go help build'.
+
+When checking out a new package, get creates the target directory
+GOPATH/src/<import-path>. If the GOPATH contains multiple entries,
+get uses the first one. See 'go help gopath'.
+
+When checking out or updating a package, get looks for a branch or tag
+that matches the locally installed version of Go. The most important
+rule is that if the local installation is running version "go1", get
+searches for a branch or tag named "go1". If no such version exists it
+retrieves the most recent version of the package.
+
+When go get checks out or updates a Git repository,
+it also updates any git submodules referenced by the repository.
+
+Get never checks out or updates code stored in vendor directories.
+
+For more about specifying packages, see 'go help packages'.
+
+For more about how 'go get' finds source code to
+download, see 'go help importpath'.
+
+See also: go build, go install, go clean.
+Macintosh-3:cothority bastiannanchen$ go get -v -t ./...
+github.com/daviddengcn/go-colortext (download)
+github.com/dedis/crypto (download)
+github.com/montanaflynn/stats (download)
+github.com/dedis/protobuf (download)
+github.com/satori/go.uuid (download)
+Fetching https://golang.org/x/net/context?go-get=1
+Parsing meta tags from https://golang.org/x/net/context?go-get=1 (status code 200)
+get "golang.org/x/net/context": found meta tag main.metaImport{Prefix:"golang.org/x/net", VCS:"git", RepoRoot:"https://go.googlesource.com/net"} at https://golang.org/x/net/context?go-get=1
+get "golang.org/x/net/context": verifying non-authoritative meta tag
+Fetching https://golang.org/x/net?go-get=1
+Parsing meta tags from https://golang.org/x/net?go-get=1 (status code 200)
+golang.org/x/net (download)
+Fetching https://golang.org/x/crypto/ssh?go-get=1
+Parsing meta tags from https://golang.org/x/crypto/ssh?go-get=1 (status code 200)
+get "golang.org/x/crypto/ssh": found meta tag main.metaImport{Prefix:"golang.org/x/crypto", VCS:"git", RepoRoot:"https://go.googlesource.com/crypto"} at https://golang.org/x/crypto/ssh?go-get=1
+get "golang.org/x/crypto/ssh": verifying non-authoritative meta tag
+Fetching https://golang.org/x/crypto?go-get=1
+Parsing meta tags from https://golang.org/x/crypto?go-get=1 (status code 200)
+golang.org/x/crypto (download)
+Fetching https://gopkg.in/codegangsta/cli.v1?go-get=1
+Parsing meta tags from https://gopkg.in/codegangsta/cli.v1?go-get=1 (status code 200)
+get "gopkg.in/codegangsta/cli.v1": found meta tag main.metaImport{Prefix:"gopkg.in/codegangsta/cli.v1", VCS:"git", RepoRoot:"https://gopkg.in/codegangsta/cli.v1"} at https://gopkg.in/codegangsta/cli.v1?go-get=1
+gopkg.in/codegangsta/cli.v1 (download)
+github.com/stretchr/testify (download)
+github.com/dedis/cosi (download)
+github.com/btcsuite/goleveldb (download)
+github.com/SSSaaS/sssa-golang (download)
+github.com/btcsuite/btcd (download)
+github.com/btcsuite/fastsha256 (download)
+github.com/btcsuite/btclog (download)
+github.com/btcsuite/seelog (download)
+github.com/btcsuite/btcutil (download)
+github.com/btcsuite/golangcrypto (download)
+github.com/BurntSushi/toml
+github.com/daviddengcn/go-colortext
+github.com/dedis/crypto/subtle
+github.com/dedis/crypto/util
+github.com/dedis/crypto/random
+github.com/dedis/cothority/log
+github.com/dedis/crypto/abstract
+github.com/montanaflynn/stats
+github.com/dedis/crypto/base64
+github.com/dedis/cothority/crypto
+github.com/dedis/crypto/ints
+github.com/dedis/cothority/monitor
+github.com/dedis/crypto/cipher
+github.com/dedis/crypto/group
+github.com/dedis/crypto/math
+github.com/dedis/crypto/cipher/sha3
+github.com/dedis/protobuf
+github.com/dedis/crypto/nist
+github.com/satori/go.uuid
+github.com/dedis/crypto/config
+golang.org/x/net/context
+github.com/dedis/crypto/cosi
+golang.org/x/crypto/curve25519
+golang.org/x/crypto/ed25519/internal/edwards25519
+gopkg.in/codegangsta/cli.v1
+github.com/dedis/crypto/anon
+github.com/dedis/crypto/ed25519
+github.com/dedis/crypto/clique
+github.com/dedis/crypto/proof
+golang.org/x/crypto/ed25519
+golang.org/x/crypto/ssh
+github.com/dedis/crypto/poly
+github.com/btcsuite/goleveldb/leveldb/util
+github.com/dedis/cothority/network
+github.com/SSSaaS/sssa-golang
+github.com/btcsuite/goleveldb/leveldb/storage
+github.com/btcsuite/fastsha256
+github.com/btcsuite/btcd/chaincfg/chainhash
+github.com/btcsuite/btcd/wire
+github.com/dedis/cothority/sda
+github.com/btcsuite/goleveldb/leveldb/errors
+github.com/btcsuite/btcd/btcec
+github.com/btcsuite/btcd/chaincfg
+github.com/btcsuite/seelog
+github.com/btcsuite/btcutil/base58
+github.com/btcsuite/golangcrypto/ripemd160
+github.com/btcsuite/btcutil
+github.com/dedis/cothority/app/lib/config
+github.com/dedis/cothority/protocols/manage
+github.com/dedis/cothority/protocols/bftcosi
+github.com/dedis/cosi/protocol
+github.com/dedis/cosi/service
+github.com/dedis/cothority/protocols/cosimul
+github.com/dedis/cothority/app/lib/server
+github.com/dedis/cothority/protocols/example/channels
+github.com/dedis/cothority/services/skipchain
+github.com/dedis/cothority/protocols/example/handlers
+github.com/dedis/cothority/protocols/jvss
+github.com/dedis/cothority/services/medco/libmedco
+github.com/dedis/cothority/services/identity
+github.com/dedis/cothority/protocols/medco
+github.com/dedis/cothority/protocols/ntree
+github.com/dedis/cothority/protocols/randhound
+github.com/dedis/cothority/services/guard
+github.com/dedis/cothority/services/status
+github.com/dedis/cothority/app/cisc
+github.com/dedis/cothority/services
+github.com/dedis/cothority/app/guard
+github.com/dedis/cothority/app/status
+github.com/dedis/cothority/protocols
+github.com/dedis/cothority/app/cothorityd
+github.com/btcsuite/btclog
+github.com/dedis/crypto/edwards
+github.com/btcsuite/btcd/txscript
+github.com/dedis/cothority/protocols/byzcoin/cosi
+github.com/dedis/cothority/protocols/example
+github.com/dedis/cothority/services/medco
+github.com/dedis/crypto/suites
+github.com/dedis/cothority/simul/platform
+github.com/dedis/cothority/simul/cothority
+github.com/dedis/cothority/protocols/byzcoin/blockchain/blkparser
+github.com/dedis/cothority/simul/platform/deterlab
+github.com/dedis/cothority/simul
+github.com/dedis/cothority/simul/platform/deterlab/users
+github.com/dedis/cothority/protocols/byzcoin/blockchain
+github.com/dedis/cothority/protocols/byzcoin
+github.com/dedis/cothority/protocols/byzcoin/ntree
+github.com/dedis/cothority/protocols/byzcoin/pbft
+Macintosh-3:cothority bastiannanchen$ ls
+CHANGELOG		Makefile		coveralls.sh		errcheck.sh		lint.sh			network			services
+Deterlab.md		README.md		crypto			gofmt.sh		log			protocols		simul
+LICENSE			app			doc.go			install.sh		monitor			sda			test_integration.sh
+Macintosh-3:cothority bastiannanchen$ cd app/
+Macintosh-3:app bastiannanchen$ ls
+chose_version.sh		cross-compile.sh		docker				status				test_guard.sh
+cisc				dedis-servers-notverified.toml	guard				test_cisc.sh			test_status.sh
+cothorityd			dedis-servers.toml		lib				test_cothorityd.sh
+Macintosh-3:app bastiannanchen$ cd cothorityd/
+Macintosh-3:cothorityd bastiannanchen$ ls
+README.md		cothorityd.go		cothorityd_test.go
+Macintosh-3:cothorityd bastiannanchen$ go build
+Macintosh-3:cothorityd bastiannanchen$ ls
+README.md		cothorityd		cothorityd.go		cothorityd_test.go
+Macintosh-3:cothorityd bastiannanchen$ ./cothorityd setup
+I : (                server.InteractiveConfig:  62) - Setting up a cothority-server.
+Please enter the [address:]PORT for incoming requests [6879]: 
+I : (                server.InteractiveConfig:  95) - We now need to get a reachable address for other CoSi servers
+I : (                server.InteractiveConfig:  96) - and clients to contact you. This address will be put in a group definition
+I : (                server.InteractiveConfig:  97) - file that you can share and combine with others to form a Cothority roster.
+I : (                server.InteractiveConfig: 129) - Check if the address 128.179.151.55:6879 is reachable from Internet...
+E : (                server.InteractiveConfig: 131) - Could not connect to your public IP
+IP-address where your server can be reached [127.0.0.1]: 
+I : (                    server.createKeyPair: 344) - Creating ed25519 private and public keys.
+I : (                    server.createKeyPair: 359) - Public key:  145fd456e6e3d2ab083cb31fc8b5f50e9987856f76f48a549b0970d18a9653e4 
+
+Please enter a folder for the configuration files [/Users/bastiannanchen/Library/cothorityd]: 
+I : (                server.InteractiveConfig: 162) - Creating inexistant directory configuration /Users/bastiannanchen/Library/cothorityd
+I : (                        server.saveFiles: 367) - Sucess! You can now use the CoSi server with the config file /Users/bastiannanchen/Library/cothorityd/config.toml
+I : (                        server.saveFiles: 374) - Saved a group definition snippet for your server at /Users/bastiannanchen/Library/cothorityd/group.toml Description = "Description of your cothority roster"
+
+[[servers]]
+  Addresses = ["127.0.0.1:6879"]
+  Public = "FF/UVubj0qsIPLMfyLX1DpmHhW929IpUmwlw0YqWU+Q="
+  Description = "Description of your server"
+
+I : (                server.InteractiveConfig: 182) - All configurations saved, ready to serve signatures now.
+Macintosh-3:cothorityd bastiannanchen$ cd
+Macintosh-3:~ bastiannanchen$ go get github.com/dedis/cothority/app/cothorityd
+Macintosh-3:~ bastiannanchen$ cothorityd 
+^C
+Macintosh-3:~ bastiannanchen$ cothorityd  -d 3
+3 : (             sda.(*serviceFactory).start: 176) - Instantiated service Skipchain
+3 : (                   sda.newServiceManager: 227) - Started Service Skipchain  (config in /Users/bastiannanchen/config/Skipchain )
+3 : (             sda.(*serviceFactory).start: 176) - Instantiated service Identity
+3 : (                   sda.newServiceManager: 227) - Started Service Identity  (config in /Users/bastiannanchen/config/Identity )
+3 : (             sda.(*serviceFactory).start: 176) - Instantiated service Status
+3 : (                   sda.newServiceManager: 227) - Started Service Status  (config in /Users/bastiannanchen/config/Status )
+3 : (             sda.(*serviceFactory).start: 176) - Instantiated service CoSi
+3 : (                   sda.newServiceManager: 227) - Started Service CoSi  (config in /Users/bastiannanchen/config/CoSi )
+3 : (             sda.(*serviceFactory).start: 176) - Instantiated service Guard
+3 : (                   sda.newServiceManager: 227) - Started Service Guard  (config in /Users/bastiannanchen/config/Guard )
+3 : (                   sda.newServiceManager: 231) - 0.0.0.0:6879 instantiated all services
+3 : (                      sda.(*Host).listen:  85) - 0.0.0.0:6879 starts to listen
+3 : (         network.(*SecureTCPHost).Listen: 265) - Addresses are [0.0.0.0:6879]
+3 : (         network.(*SecureTCPHost).Listen: 267) - Starting to listen on 0.0.0.0:6879
+3 : (               network.(*TCPHost).listen: 195) - Sending port 6879 over 0xc4200f8bd0
+3 : (                sda.(*Host).listen.func1:  88) - 0.0.0.0:6879 Accepted Connection from 127.0.0.1:57521
+3 : (           network.(*SecureTCPHost).Open: 332) - 127.0.0.1:57521 : successfully connected and identified 0.0.0.0:6879
+3 : (                     sda.(*Host).Connect: 137) - Host 0.0.0.0:6879 connected to 0.0.0.0:6879
+3 : (          sda.(*Host).registerConnection: 323) - Connection already registered true
+W : (   network.(*SecureTCPHost).Listen.func1: 249) - Negotiation failed: 0.0.0.0:6879: Error while receiving ServerIdentity during negotiation: EOF
+W : (   network.(*SecureTCPHost).Listen.func1: 249) - Negotiation failed: 0.0.0.0:6879: Error while receiving ServerIdentity during negotiation: EOF
+W : (   network.(*SecureTCPHost).Listen.func1: 249) - Negotiation failed: 0.0.0.0:6879: Error while receiving ServerIdentity during negotiation: EOF
+    
