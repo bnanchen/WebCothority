@@ -39,8 +39,18 @@ file.fileinput('upload');
 
 // A L'ANCIENNE:
 
+function takeCareOf(file) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        console.log("Ended to load the file");
+        sign(event.target.result); // try with file and will see
+    };
+    reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
+}
+
 $("#fileInput").change(function() {
    console.log(this.files[0]);
+   takeCareOf(this.files[0]);
 });
 
 
