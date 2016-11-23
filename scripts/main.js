@@ -5,8 +5,9 @@
 $(document).ready(function () {
     // appelle la fonction udpate() toutes les 3 secondes:
     setInterval(function () {
-        updateList()
+        updateList();
     }, 3000);
+
     // $("#hello").on("click", function(event) {
     //   alert(list[0].name);
     // });

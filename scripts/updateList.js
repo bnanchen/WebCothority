@@ -100,7 +100,7 @@ function nodeCreation(message) {
         message.Status.map.Status.value.module.map.Uptime.value,
         message.Status.map.Status.value.module.map.Version.value
     );
-    console.log(message.Status.map.Status.value.module.map.Available_Services.value);
-    console.log(node);
+    //console.log(message.Status.map.Status.value.module.map.Available_Services.value);
+    //console.log(node);
     return node;
 }

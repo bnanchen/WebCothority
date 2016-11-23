@@ -1,12 +1,12 @@
 // download an element inside a blob from my computer
-
+/*
 var file = $("#file-sign");
 
 file.fileinput({
-    uploadUrl: "sign",
+    //uploadUrl: 'scripts/fileUpload.php', // using Ajax
     showCaption: true,
     showUpload: true,
-    uploadLabel: "Submit &amp; Sign",
+    uploadLabel: "Submit",
     uploadClass: "btn btn-success",
     showRemove: false,
     uploadAsync: true,
@@ -30,3 +30,18 @@ file.on('fileselect', function(event, numFiles, label) {
 file.on('fileloaded', function(event, file, previewId, index, reader) {
     console.log("fileloaded");
 });
+
+file.fileinput('upload');
+
+*/
+
+
+
+// A L'ANCIENNE:
+
+$("#fileInput").change(function() {
+   console.log(this.files[0]);
+});
+
+
+

@@ -16,7 +16,7 @@ function websocket(portNumber) {
         var lb = new Blob([new Uint8Array([l % 256, l / 256])], {type: "application/octet-stream"});
         socket.send(lb);
         socket.send(bytes);
-        console.log("sent everything");
+        //console.log("sent everything");
     };
 
     function loadReceivedMessage() {
