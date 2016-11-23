@@ -41,3 +41,5 @@ function hexToBytesX(hex) {
     // create a blob used to send the data:
     return byteArray;
 }
+
+
