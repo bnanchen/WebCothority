@@ -64,7 +64,6 @@ function updateList() { // mettre en async si dispo: chrome 55
     runGenerator(function* bonjour() {
         var listNodes = [];
         var message = yield websocket(7101);
-        console.log(message);
         listNodes.push(nodeCreation(message));
         message = yield websocket(7102);
         listNodes.push(nodeCreation(message));
