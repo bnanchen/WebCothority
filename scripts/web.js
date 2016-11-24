@@ -66,3 +66,57 @@ function runGenerator(g) {
         }
     })();
 }
+
+function websocket_sign(portNumber) {
+    var ProtoBuf = dcodeIO.ProtoBuf;
+    var Builder = ProtoBuf.newBuilder();
+    var socket = new WebSocket("ws://localhost:" + portNumber + "/sign");
+    var protoSign = ProtoBuf.loadProto(`
+                message SignRequest {
+                    required bytes Hash = 1;
+                    required string NodeList = 2;
+                }
+
+                message SignReply {
+                    required bytes Signature = 1;
+                    required bytes Aggregate = 2;
+                }
+                `);
+    socket.binaryType = "arraybuffer";
+    if (socket.readyState != 0 && socket.readyState != 1) {
+        console.log("The opening of the WebSocket doesn't go well. Ready State constant:"+ socket.readyState);
+    }
+    // when the socket is opened (reaction):
+    socket.onopen = function () {
+        var bytes = hexToBytes("be4784be234e5373908efe6820330ee9");
+        var signMsg = protoSign.build("SignRequest").encode({Hash: "1234", NodeList: "localhost:2000"}); // finish doesn't exist
+        //bytes += signMsg;
+        var l = bytes.size;
+        console.log(l);
+        var lb = new Blob([new Uint8Array([l % 256, l / 256])], {type: "application/octet-stream"});
+        socket.send(lb);
+        socket.send(bytes);
+        console.log("sent signRequest");
+    };
+
+    function loadReceivedMessage() {
+        // usage of a Promise:
+        return new Promise(function (resolve, reject) {
+            socket.onmessage = function(e) {
+                var returnedMessage;
+
+                var byte16 = e.data.slice(0, 15);
+                var byteRem = e.data.slice(16, e.data.byLength);
+                returnedMessage = protoSign.build("SignReply").decode(byteRem);
+                resolve(returnedMessage);
+            };
+
+            socket.onerror = function (e) {
+                reject(e);
+            };
+            //return ;
+        });
+    }
+    return loadReceivedMessage();
+    //return loadReceivedMessage();
+}
