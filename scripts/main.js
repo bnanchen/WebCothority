@@ -4,7 +4,7 @@
  */
 $(document).ready(function () {
     updateList();
-    // appelle la fonction udpate() toutes les 3 secondes:
+    // next call each 3 seconds the updateList() function:
     setInterval(function () {
         updateList();
     }, 3000);

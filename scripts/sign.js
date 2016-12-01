@@ -17,7 +17,7 @@ function sign(fileToSign, file) {
         // translate the signature in base64:
         var signedFilebase64 = btoa(String.fromCharCode.apply(null, signedFile));
         //alert(signedFilebase64);
-        $("#add_download_button").append("<button type='button' id='download_button'>"+ "Download the Signature" + "</button>");
+        $("#add_download_button").append("<button class='btn btn-default' type='button' id='download_button'>"+ "Download the Signature" + "</button>");
         $("#download_button").click(function() {
             downloadSignature("signature_of_" + file.fileName, signedFilebase64);
         });
