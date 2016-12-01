@@ -11,23 +11,25 @@ function takeCareOf(file) {
 
     reader.onprogress = updateProgress(event, progressBar);
 
-    reader.onload = function(event) {
-        // Ensure that the progress bar displays 100% at the end.
-        progressBar.style.width = '100%';
-        progressBar.textContent = '100%';
-        console.log("Ended to load the file");
-        sign(event.target.result, file); // file read in ArrayBuffer
-    };
-    reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
-}
+    function loadFile() {
+        // usage of a Promise:
+        return new Promise(function (resolve, reject) {
+            reader.onload = function(event) {
 
-/**
- * if there is an upload of a file by the user: call takeCareOf(file)
- */
-$("#fileInput").change(function() {
-   console.log(this.files[0]);
-   takeCareOf(this.files[0]);
-});
+                // Ensure that the progress bar displays 100% at the end.
+                progressBar.style.width = '100%';
+                progressBar.textContent = '100%';
+                console.log("Ended to load the file");
+                //sign(event.target.result, file); // file read in ArrayBuffer (typeof event.target.result)
+                resolve(event.target.result);
+            };
+        });
+    }
+
+    reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
+
+    return loadFile();
+}
 
 /**
  * update the progress bar when there is the upload of a file

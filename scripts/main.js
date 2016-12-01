@@ -17,6 +17,25 @@ $(document).ready(function () {
         console.log("Hello World!");
     });
 
+    /**
+     * if there is an upload of a file by the user: call takeCareOf(file)
+     */
+    $("#fileInput").change(function() {
+        console.log(this.files[0]);
+        var file = this;
+        //takeCareOf(this.files[0]);
+
+
+        runGenerator(function* waitingfile() {
+            var listNodes = [];
+            var fileAsArrayBuffer = yield takeCareOf(file.files[0]);
+            $("#button_sign_file").click(function() {
+                sign(fileAsArrayBuffer, file);
+            });
+        });
+
+    });
+
     // If the button is clicked call the sign part:
      $("#sign_button").click(function() {
         runGenerator(function* bonjour() {
