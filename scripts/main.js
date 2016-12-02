@@ -23,14 +23,13 @@ $(document).ready(function () {
     $("#fileInput").change(function() {
         console.log(this.files[0]);
         var file = this;
-        //takeCareOf(this.files[0]);
-
 
         runGenerator(function* waitingfile() {
-            var listNodes = [];
             var fileAsArrayBuffer = yield takeCareOf(file.files[0]);
+            var message = yield websocket_sign(7101, fileAsArrayBuffer);
+
             $("#button_sign_file").click(function() {
-                sign(fileAsArrayBuffer, file);
+                sign(fileAsArrayBuffer, getFilename(file.value), message);
             });
         });
 

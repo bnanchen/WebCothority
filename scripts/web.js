@@ -54,7 +54,7 @@ function websocket(portNumber) {
     //return loadReceivedMessage();
 }
 
-function websocket_sign(portNumber) {
+function websocket_sign(portNumber, file) {
     var ProtoBuf = dcodeIO.ProtoBuf;
     var socket = new WebSocket("ws://localhost:" + portNumber + "/sign");
     var protoSign = ProtoBuf.loadProto(`
@@ -70,13 +70,13 @@ function websocket_sign(portNumber) {
                 `);
     socket.binaryType = "arraybuffer";
     if (socket.readyState != 0 && socket.readyState != 1) {
-        console.log("The opening of the WebSocket doesn't go well. Ready State constant:"+ socket.readyState);
+        console.log("The opening of the WebSocket doesn't go well. Ready State constant: "+ socket.readyState);
     }
     // when the socket is opened (reaction):
     socket.onopen = function () {
         var signMsgProto = protoSign.build("SignRequest");
         nacl_factory.instantiate(function(nacl) {
-            var hash = nacl.crypto_hash_sha256(bytesToHex("1234")); // Uint8Array // TODO ajouter le fichier à signer
+            var hash = nacl.crypto_hash_sha256(bytesToHex(file)); // Uint8Array // TODO ajouter le fichier à signer
             var signMsg = new signMsgProto({Hash: hash, NodeList: "localhost:2000"});
             var signMsgHex = signMsg.encode().toHex(); // finish doesn't exist
             var bytes = hexToBytes("be4784be234e5373908efe6820330ee9" + signMsgHex);
