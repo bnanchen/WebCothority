@@ -48,10 +48,26 @@ function updateProgress(evt, progressBar) {
     }
 }
 
+/**
+ * Isolate the filename from the full path of the file
+ *
+ * @param fullPathName full path of the file
+ */
+function getFilename(fullPathName) {
+    var charBackslachNumber = 0;
+    var charPointNumber = 0;
 
+    for (i = 0; i < fullPathName.length; i++) {
+        // take off all characters before the last '\' (included itself)
+        if (fullPathName[i] == "\\") {
+            charBackslachNumber = i;
+        }
 
+        // take off all characters after the last '.'
+        if (fullPathName[i] == '.') {
+            charPointNumber = i;
+        }
+    }
 
-
-
-
-
+    return fullPathName.slice(charBackslachNumber+1, charPointNumber);
+}
