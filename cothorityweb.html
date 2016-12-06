@@ -97,36 +97,65 @@
 <br>
 
 <div class="row">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg col-md-4" data-toggle="modal" data-target="#myModal">
-        Interact with Cothority.
+    <!-- Button trigger modals -->
+    <button type="button" class="btn btn-primary btn-lg col-md-4" data-toggle="modal" data-target="#signature_Modal">
+        Signature.
     </button>
     <div id="add_download_button" class="col-md-4"></div>
+    <button type="button" class="btn btn-primary btn-lg col-md-4" data-toggle="modal" data-target="#verify_Modal">
+        Verify.
+    </button>
 </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Interact with Cothority.</h4>
-                </div>
-                <div class="modal-body">
-                    First you need to choose a file from your computer.
-                    <label for="fileInput" value="Submit your csv: ">Submit your file: </label>
-                    <input type="file" id="fileInput">
-                    <div id="progress_bar"><div class="percent">0%</div></div>
-                    Second you can choose between sign the file with cothority and have the possibility to download it on
-                    your computer. Or verifiy your signature file.
-                </div>
-                <div class="modal-footer">
-                    <button id="button_sign_file" type="button" class="btn btn-primary" data-dismiss="modal">Sign</button>
-                    <button id="button_verify_signature" type="button" class="btn btn-primary" data-dismiss="modal">Verify</button>
-                </div>
+<!-- Signature Modal -->
+<div class="modal fade" id="signature_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="signature_ModalLabel">Interact with Cothority.</h4>
+            </div>
+            <div class="modal-body">
+                First you need to choose a file from your computer.
+                <label for="signature_fileInput" value="Submit your csv: ">Submit your file: </label>
+                <input type="file" id="signature_fileInput">
+                <div id="progress_bar"><div class="percent">0%</div></div>
+                Second you can choose between sign the file with cothority and have the possibility to download it on
+                your computer. Or verifiy your signature file.
+            </div>
+            <div class="modal-footer">
+                <button id="button_sign_file" type="button" class="btn btn-primary" data-dismiss="modal">Sign</button>
+                <button id="button_sign_dismiss" type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
             </div>
         </div>
     </div>
+</div>
+
+<br>
+
+<!-- Verify Modal -->
+<div class="modal fade" id="verify_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="verify_ModalLabel">Interact with Cothority.</h4>
+            </div>
+            <div class="modal-body">
+                First you need to choose a file from your computer.
+                <label for="verify_fileInput" value="Submit your csv: ">Submit your file: </label>
+                <input type="file" multiple="multiple" id="verify_fileInput">
+                Second you can choose between sign the file with cothority and have the possibility to download it on
+                your computer. Or verifiy your signature file.
+                If you want to verify, you need to upload the JSON signature file too.
+            </div>
+            <div class="modal-footer">
+                <button id="button_verify_signature" type="button" class="btn btn-primary" data-dismiss="modal">Verify</button>
+                <button id="button_verify_dismiss" type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- javascript -->
