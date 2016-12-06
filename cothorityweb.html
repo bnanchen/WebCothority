@@ -94,7 +94,10 @@
         Interact with Cothority.
     </h1>
 </div>
+
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+    <!-- First collapse -->
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
@@ -113,14 +116,18 @@
                     <input type="file" id="signature_fileInput">
                     <div id="progress_bar"><div class="percent">0%</div></div>
                 </div>
-                <div>
-                    <div id="add_download_button" class="col-md-4"></div>
-                    <button id="button_sign_file" type="button" class="btn btn-primary">Sign</button>
-                    <button id="button_sign_dismiss" type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseOne">Dismiss</button>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="button_sign_file" type="button" class="btn btn-primary">Sign</button>
+                        <button id="button_sign_dismiss" type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseOne">Dismiss</button>
+                    </div>
+                    <div id="add_download_button" class="col-md-2"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Second collapse -->
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
@@ -140,9 +147,11 @@
                     your computer. Or verifiy your signature file.
                     If you want to verify, you need to upload the JSON signature file too.
                 </div>
-                <div class="modal-footer">
-                    <button id="button_verify_signature" type="button" class="btn btn-primary" data-dismiss="modal">Verify</button>
-                    <button id="button_verify_dismiss" type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseTwo">Dismiss</button>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="button_verify_signature" type="button" class="btn btn-primary" data-dismiss="modal">Verify</button>
+                        <button id="button_verify_dismiss" type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseTwo">Dismiss</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,7 +160,6 @@
 
 
 <!-- Signature Modal -->
-
 <div class="modal fade" id="verification_result_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -174,7 +182,7 @@
                 </h4>
             </div>
             <div class="modal-footer">
-
+                <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
             </div>
         </div>
     </div>

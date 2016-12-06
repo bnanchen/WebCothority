@@ -18,17 +18,18 @@ $(document).ready(function () {
     });
 
     /**
-     * if there is an upload of a file by the user: call takeCareOf(file)
+     * Signature part
      */
     $("#signature_fileInput").change(function() {
         console.log(this.files[0]);
         var file = this;
-
+        console.log("1");
         runGenerator(function* waitingfile() {
             var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
-            $("#button_sign_file").click(function() {
+            $("#button_sign_file").unbind('click').click(function() {
+                console.log("3");
                 sign(fileAsArrayBuffer, getFilename(file.value), message);
             });
         });
@@ -36,7 +37,7 @@ $(document).ready(function () {
     });
 
     /**
-     *
+     * Verification part
      */
     $("#verify_fileInput").change(function() {
         var file = this;
@@ -48,7 +49,7 @@ $(document).ready(function () {
             console.log(getFilename(file.value));
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
-            $("#button_verify_signature").click(function () {
+            $("#button_verify_signature").unbind('click').click(function () {
                 verifySignature(fileAsArrayBuffer, signatureAsString, message);
             });
         });

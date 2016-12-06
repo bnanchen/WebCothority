@@ -40,7 +40,8 @@ function sign(fileToSign, filename, message) {
             $("#add_download_button").append("<button class='btn btn-default' type='button' id='download_button'>" + "Download the Signature" + "</button>");
         }
 
-        $("#download_button").click(function () {
+        // download the JSON file in clicking on the download_button
+        $("#download_button").unbind('click').click(function () {
             downloadJSONFile(filename, signatureBase64, aggregateKeyBase64, hashBase64);
         });
 
