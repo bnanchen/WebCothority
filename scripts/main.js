@@ -29,7 +29,6 @@ $(document).ready(function () {
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
             $("#button_sign_file").unbind('click').click(function() {
-                console.log("3");
                 sign(fileAsArrayBuffer, getFilename(file.value), message);
             });
         });
@@ -43,10 +42,38 @@ $(document).ready(function () {
         var file = this;
 
         runGenerator(function* waitingfile() {
-            // TODO ajouter vérification des fichiers
-            var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
-            var signatureAsString = yield takeCareOf(file.files[1], false);
-            console.log(getFilename(file.value));
+            var jsonFile = 0;
+            var nameFile1 = getFileExtension(file.files[0].name);
+            var nameFile2 = getFileExtension(file.files[1].name);
+
+            // Verify that the number of files is 2:
+            if (file.files.length != 2) {
+                // warning alert appears:
+                $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'>"
+                    +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload only two files."
+                +"</div>");
+                return;
+            }
+            console.log(nameFile1);
+            console.log(nameFile2);
+            // Verify that one of the two files has .json extension:
+            if (nameFile1 != "json" && nameFile2 != "json") {
+                // warning alert appears:
+                $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'>"
+                    +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                    +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
+                    +"</div>");
+                return;
+            }
+
+            // determine the jsonFile
+            if (nameFile2 == "json") {
+                jsonFile = 1;
+            }
+
+            var fileAsArrayBuffer = yield takeCareOf(file.files[(jsonFile+1) % 2], true);
+            var signatureAsString = yield takeCareOf(file.files[jsonFile], false);
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
             $("#button_verify_signature").unbind('click').click(function () {

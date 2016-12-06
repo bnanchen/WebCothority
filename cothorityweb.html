@@ -153,6 +153,9 @@
                         <button id="button_verify_dismiss" type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseTwo">Dismiss</button>
                     </div>
                 </div>
+                <br>
+                <!-- alert message -->
+                <div id="verification_alert"></div>
             </div>
         </div>
     </div>
@@ -187,62 +190,10 @@
         </div>
     </div>
 </div>
+
 <br>
+
 <button id="hello" class="btn btn-default">Hello World!</button>
-
-<!-- older version -->
-<!-- Signature Modal -->
-<!--
-<div class="modal fade" id="signature_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="signature_ModalLabel">Interact with Cothority.</h4>
-            </div>
-            <div class="modal-body">
-                First you need to choose a file from your computer.
-                <label for="signature_fileInput" value="Submit your csv: ">Submit your file: </label>
-                <input type="file" id="signature_fileInput">
-                <div id="progress_bar"><div class="percent">0%</div></div>
-                Second you can choose between sign the file with cothority and have the possibility to download it on
-                your computer. Or verifiy your signature file.
-            </div>
-            <div class="modal-footer">
-                <button id="button_sign_file" type="button" class="btn btn-primary" data-dismiss="modal">Sign</button>
-                <button id="button_sign_dismiss" type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br>
--->
-<!-- Verify Modal -->
-<!--
-<div class="modal fade" id="verify_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="verify_ModalLabel">Interact with Cothority.</h4>
-            </div>
-            <div class="modal-body">
-                First you need to choose a file from your computer.
-                <label for="verify_fileInput" value="Submit your csv: ">Submit your file: </label>
-                <input type="file" multiple="multiple" id="verify_fileInput">
-                Second you can choose between sign the file with cothority and have the possibility to download it on
-                your computer. Or verifiy your signature file.
-                If you want to verify, you need to upload the JSON signature file too.
-            </div>
-            <div class="modal-footer">
-                <button id="button_verify_signature" type="button" class="btn btn-primary" data-dismiss="modal">Verify</button>
-                <button id="button_verify_dismiss" type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 
 <!-- javascript -->
 <script src="scripts/main.js"></script>

@@ -79,6 +79,24 @@ function getFilename(fullPathName) {
 }
 
 /**
+ * Return the extension name of the file
+ *
+ * @param file
+ */
+function getFileExtension(file) {
+    var charPointNumber = 0;
+
+    for (i = 0; i < file.length; i++) {
+        // take off all characters before the last '.'
+        if (file[i] == '.') {
+            charPointNumber = i;
+        }
+    }
+
+    return file.slice(charPointNumber+1, file.length);
+}
+
+/**
  * Read the signature JSON file as a text and return it as an object
  *
  * @param text

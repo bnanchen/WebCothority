@@ -7,8 +7,6 @@
  * @param message
  */
 function sign(fileToSign, filename, message) {
-    console.log(filename);
-
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
         var signature = new Uint8Array(message.Signature.toArrayBuffer());
