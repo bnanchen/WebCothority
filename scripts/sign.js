@@ -75,32 +75,53 @@ function sign(fileToSign, filename, message) {
  * @param message
  */
 function verifySignature(fileToVerify, signatureToVerify, message) {
-    console.log("verifySignature");
     var objectJSON = getJSONFileInObject(signatureToVerify);
-    console.log(objectJSON);
+    var hash_verification = false;
+    var signature_verification = false;
+
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
         var signature = fromBase64toUint8Array(objectJSON.signature);
-        // TODO si j'envoie le fichier à un conode il me donnera la bonne aggregate key? Ou sinon comment je la calcule?
         var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
-        console.log(hash);
         var hashJSON = fromBase64toUint8Array(objectJSON.hash);
-        console.log(hashJSON);
         if (isEqualTo(hash, hashJSON)) {
-            console.log("The hash of the file is equal to the hash in the JSON file.");
-            // TODO reaction?!?
+            hash_verification = true;
         }
 
         // Verification of the signature with the hash and the aggregate public key:
         var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
-        console.log(verification);
         if (verification) {
-            console.log("Correct verification of the signature with the hash and the aggregate public key.");
-            // TODO reaction?!?
+            signature_verification = true;
         }
+
+        // If the progress bar already exists, remove it.
+        if ($("#hash_progress_bar").length != 0) {
+            $("#hash_progress_bar").remove();
+        }
+
+        if ($("#signature_progress_bar").length != 0) {
+            $("#signature_progress_bar").remove();
+        }
+
+        // show the Verification Modal
+        $("#verification_result_modal").modal('show');
+
+        // Update of the progress bars
+        if (hash_verification) {
+            $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
+        } else {
+            $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
+        }
+
+        if (signature_verification) {
+            $("#verify_signature_progress").append("<div id='signature_progress_bar' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
+        } else {
+            $("#verify_signature_progress").append("<div id='signature_progress_bar' class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
+        }
+
     });
 }
 
@@ -127,11 +148,13 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
         'aggregate key': aggregateKey,
         hash: hash
     };
+
     var blob = new Blob([JSON.stringify(jsonFile, null, 5)], {type: 'application/json'});
-    if(window.navigator.msSaveOrOpenBlob) {
+
+    if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
     }
-    else{
+    else {
         var elem = window.document.createElement('a');
         elem.href = window.URL.createObjectURL(blob);
         elem.download = "signature_of_" + filename;

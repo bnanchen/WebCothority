@@ -45,14 +45,15 @@ $(document).ready(function () {
             // TODO ajouter vérification des fichiers
             var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
             var signatureAsString = yield takeCareOf(file.files[1], false);
+            console.log(getFilename(file.value));
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
             $("#button_verify_signature").click(function () {
                 verifySignature(fileAsArrayBuffer, signatureAsString, message);
             });
         });
-    })
-
+    });
+/*
     // If the button is clicked call the sign part:
      $("#sign_button").click(function() {
         runGenerator(function* bonjour() {
@@ -65,5 +66,5 @@ $(document).ready(function () {
                 console.log(success);
             });
         });
-     });
+     });*/
 });
