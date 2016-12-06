@@ -6,20 +6,11 @@
  */
 function takeCareOf(file, asArrayBuffer) {
     var reader = new FileReader();
-    var progressBar = document.querySelector('.percent');;
-    progressBar.style.width = '0%';
-    progressBar.textContent = '0%';
-
-    reader.onprogress = updateProgress(event, progressBar);
 
     function loadFile() {
         // usage of a Promise:
         return new Promise(function (resolve, reject) {
             reader.onload = function(event) {
-
-                // Ensure that the progress bar displays 100% at the end.
-                progressBar.style.width = '100%';
-                progressBar.textContent = '100%';
                 //sign(event.target.result, file); // file read in ArrayBuffer (typeof event.target.result)
                 resolve(event.target.result);
             };
