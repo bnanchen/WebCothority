@@ -20,7 +20,6 @@ function takeCareOf(file, asArrayBuffer) {
                 // Ensure that the progress bar displays 100% at the end.
                 progressBar.style.width = '100%';
                 progressBar.textContent = '100%';
-                console.log("Ended to load the file");
                 //sign(event.target.result, file); // file read in ArrayBuffer (typeof event.target.result)
                 resolve(event.target.result);
             };

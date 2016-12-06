@@ -23,7 +23,7 @@ $(document).ready(function () {
     $("#signature_fileInput").change(function() {
         console.log(this.files[0]);
         var file = this;
-        console.log("1");
+
         runGenerator(function* waitingfile() {
             var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
@@ -55,8 +55,7 @@ $(document).ready(function () {
                 +"</div>");
                 return;
             }
-            console.log(nameFile1);
-            console.log(nameFile2);
+
             // Verify that one of the two files has .json extension:
             if (nameFile1 != "json" && nameFile2 != "json") {
                 // warning alert appears:
