@@ -31,6 +31,11 @@ function bytesToHex(byteArray) {
     return h;
 }
 
+/**
+ *
+ * @param hex
+ * @returns {Uint8Array}
+ */
 function hexToBytesX(hex) {
     // conversion to a binary array:
     var byteArray = new Uint8Array(hex.length / 2);
@@ -42,4 +47,34 @@ function hexToBytesX(hex) {
     return byteArray;
 }
 
+/**
+ * Compare two Uint8Array, if they are the same return true, otherwise false.
+ *
+ * @param first
+ * @param second
+ * @returns {boolean}
+ */
+function isEqualTo(first, second) {
+    if (first.length != second.length) {
+        return false;
+    } else {
+        for (var i = 0; i < first.length; i++) {
+            if (first[i] != second[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+/**
+ * Translate a file in base64 to a file in Uint8Array
+ *
+ * @param base64
+ * @returns {Uint8Array}
+ */
+function fromBase64toUint8Array(base64) {
+    return new Uint8Array(atob(base64).split("").map(function(c) {
+        return c.charCodeAt(0); }));
+}
 
