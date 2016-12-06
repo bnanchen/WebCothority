@@ -53,7 +53,12 @@ function websocket(portNumber) {
     return loadReceivedMessage();
     //return loadReceivedMessage();
 }
-
+/**
+ *
+ * @param portNumber
+ * @param file        file as an ArrayBuffer
+ * @returns {*}
+ */
 function websocket_sign(portNumber, file) {
     var ProtoBuf = dcodeIO.ProtoBuf;
     var socket = new WebSocket("ws://localhost:" + portNumber + "/sign");
