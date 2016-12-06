@@ -5,6 +5,8 @@
  */
 function sign(fileToSign, filename, message) {
     console.log(filename);
+
+    // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
         var signature = new Uint8Array(message.Signature.toArrayBuffer());
         var aggregateKey = new Uint8Array(message.Aggregate.toArrayBuffer());
@@ -67,6 +69,24 @@ function sign(fileToSign, filename, message) {
 /**
  *
  *
+ * @param fileToVerify
+ */
+function verifySignature(fileToVerify) {
+    console.log("verifySignature");
+    // instantiate the nacl module:
+    nacl_factory.instantiate(function (nacl) {
+        var signature = new Uint8Array(fileToVerify);
+        //var sig = new Uint8Array(message.Signature.toArrayBuffer());
+        //var agg = new Uint8Array(message.Aggregate.toArrayBuffer());
+        var hash = nacl.crypto_hash_sha256(bytesToHex("1234")); // Uint8Array
+        var success = nacl.crypto_sign_verify_detached(signature, hash, agg);
+        console.log(success);
+    });
+}
+
+/**
+ *
+ *
  * @param filename
  * @param signature
  * @param aggregateKey
@@ -99,8 +119,4 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
         elem.click();
         document.body.removeChild(elem);
     }
-}
-
-function verifySignature(fileToVerify) {
-
 }

@@ -31,6 +31,10 @@ $(document).ready(function () {
             $("#button_sign_file").click(function() {
                 sign(fileAsArrayBuffer, getFilename(file.value), message);
             });
+
+            $("#button_verify_signature").click(function() {
+                verifySignature(fileAsArrayBuffer);
+            });
         });
 
     });
@@ -38,7 +42,7 @@ $(document).ready(function () {
     // If the button is clicked call the sign part:
      $("#sign_button").click(function() {
         runGenerator(function* bonjour() {
-            var message = yield websocket_sign(7101);
+            var message = yield websocket_sign(7101, bytesToHex("1234"));
             nacl_factory.instantiate(function (nacl) {
                 var sig = new Uint8Array(message.Signature.toArrayBuffer());
                 var agg = new Uint8Array(message.Aggregate.toArrayBuffer());

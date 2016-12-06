@@ -76,7 +76,7 @@ function websocket_sign(portNumber, file) {
     socket.onopen = function () {
         var signMsgProto = protoSign.build("SignRequest");
         nacl_factory.instantiate(function(nacl) {
-            var hash = nacl.crypto_hash_sha256(bytesToHex(file)); // Uint8Array // TODO ajouter le fichier à signer
+            var hash = nacl.crypto_hash_sha256(bytesToHex(file)); // Uint8Array
             var signMsg = new signMsgProto({Hash: hash, NodeList: "localhost:2000"});
             var signMsgHex = signMsg.encode().toHex(); // finish doesn't exist
             var bytes = hexToBytes("be4784be234e5373908efe6820330ee9" + signMsgHex);
