@@ -2,8 +2,9 @@
  * take care of the file if there is an upload
  *
  * @param file the file uploaded (Blob)
+ * @param asArrayBuffer true if we want to read the file as an ArrayBuffer, otherwise read as a String
  */
-function takeCareOf(file) {
+function takeCareOf(file, asArrayBuffer) {
     var reader = new FileReader();
     var progressBar = document.querySelector('.percent');;
     progressBar.style.width = '0%';
@@ -26,10 +27,15 @@ function takeCareOf(file) {
         });
     }
 
-    reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
+    if (asArrayBuffer == true) {
+        reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
+    } else {
+        reader.readAsText(file); // trigger the onload (asynchrone)
+    }
 
     return loadFile();
 }
+
 
 /**
  * update the progress bar when there is the upload of a file
@@ -70,4 +76,15 @@ function getFilename(fullPathName) {
     }
 
     return fullPathName.slice(charBackslachNumber+1, charPointNumber);
+}
+
+/**
+ * Read the signature JSON file as a text and return it as an object
+ *
+ * @param text
+ * @returns {*}
+ */
+function getJSONFileInObject(text) {
+    var object = JSON.parse(text);
+    return object;
 }
