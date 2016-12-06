@@ -20,29 +20,43 @@ $(document).ready(function () {
     /**
      * if there is an upload of a file by the user: call takeCareOf(file)
      */
-    $("#fileInput").change(function() {
+    $("#signature_fileInput").change(function() {
         console.log(this.files[0]);
         var file = this;
 
         runGenerator(function* waitingfile() {
-            var fileAsArrayBuffer = yield takeCareOf(file.files[0]);
+            var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
             var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
             $("#button_sign_file").click(function() {
                 sign(fileAsArrayBuffer, getFilename(file.value), message);
             });
-
-            $("#button_verify_signature").click(function() {
-                verifySignature(fileAsArrayBuffer);
-            });
         });
 
     });
 
+    /**
+     *
+     */
+    $("#verify_fileInput").change(function() {
+        var file = this;
+
+        runGenerator(function* waitingfile() {
+            // TODO ajouter vérification des fichiers
+            var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
+            var signatureAsString = yield takeCareOf(file.files[1], false);
+            var message = yield websocket_sign(7101, fileAsArrayBuffer);
+
+            $("#button_verify_signature").click(function () {
+                verifySignature(fileAsArrayBuffer, signatureAsString, message);
+            });
+        });
+    })
+
     // If the button is clicked call the sign part:
      $("#sign_button").click(function() {
         runGenerator(function* bonjour() {
-            var message = yield websocket_sign(7101, bytesToHex("1234"));
+            var message = yield websocket_sign(7101, "1234");
             nacl_factory.instantiate(function (nacl) {
                 var sig = new Uint8Array(message.Signature.toArrayBuffer());
                 var agg = new Uint8Array(message.Aggregate.toArrayBuffer());

@@ -1,7 +1,10 @@
 // Signing part
 /**
  *
+ *
  * @param fileToSign
+ * @param filename
+ * @param message
  */
 function sign(fileToSign, filename, message) {
     console.log(filename);
@@ -11,8 +14,6 @@ function sign(fileToSign, filename, message) {
         var signature = new Uint8Array(message.Signature.toArrayBuffer());
         var aggregateKey = new Uint8Array(message.Aggregate.toArrayBuffer());
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
-        //var success = nacl.crypto_sign_verify_detached(signature, hash, aggregateKey);
-
 
 
         /*
@@ -70,17 +71,36 @@ function sign(fileToSign, filename, message) {
  *
  *
  * @param fileToVerify
+ * @param signatureToVerify
+ * @param message
  */
-function verifySignature(fileToVerify) {
+function verifySignature(fileToVerify, signatureToVerify, message) {
     console.log("verifySignature");
+    var objectJSON = getJSONFileInObject(signatureToVerify);
+    console.log(objectJSON);
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = new Uint8Array(fileToVerify);
-        //var sig = new Uint8Array(message.Signature.toArrayBuffer());
-        //var agg = new Uint8Array(message.Aggregate.toArrayBuffer());
-        var hash = nacl.crypto_hash_sha256(bytesToHex("1234")); // Uint8Array
-        var success = nacl.crypto_sign_verify_detached(signature, hash, agg);
-        console.log(success);
+        var signature = fromBase64toUint8Array(objectJSON.signature);
+        // TODO si j'envoie le fichier à un conode il me donnera la bonne aggregate key? Ou sinon comment je la calcule?
+        var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
+        var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
+
+        // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
+        console.log(hash);
+        var hashJSON = fromBase64toUint8Array(objectJSON.hash);
+        console.log(hashJSON);
+        if (isEqualTo(hash, hashJSON)) {
+            console.log("The hash of the file is equal to the hash in the JSON file.");
+            // TODO reaction?!?
+        }
+
+        // Verification of the signature with the hash and the aggregate public key:
+        var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
+        console.log(verification);
+        if (verification) {
+            console.log("Correct verification of the signature with the hash and the aggregate public key.");
+            // TODO reaction?!?
+        }
     });
 }
 
@@ -90,7 +110,7 @@ function verifySignature(fileToVerify) {
  * @param filename
  * @param signature
  * @param aggregateKey
- * @param sha256File
+ * @param hash
  */
 function downloadJSONFile(filename, signature, aggregateKey, hash) {
     // today date in format: mm/dd/yyyy
