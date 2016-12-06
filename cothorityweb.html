@@ -109,12 +109,13 @@
         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
                 <div>
-                    <!-- TODO: faire le texte -->
-                    First you need to choose a file from your computer.
                     <br>
                     <label for="signature_fileInput" value="Submit your csv: ">Submit your file: </label>
                     <input type="file" id="signature_fileInput">
-                    <div id="progress_bar"><div class="percent">0%</div></div>
+                    <br>
+                    The file will be signed collectively by the conodes. Then you have
+                    the possibility to download a JSON file with the signature and other informations.
+                    <br><br>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -138,14 +139,13 @@
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
-                <!-- TODO: faire le text -->
-                <div class="modal-body">
-                    First you need to choose a file from your computer.
-                    <label for="verify_fileInput" value="Submit your csv: ">Submit your file: </label>
+                <div>
+                    <label for="verify_fileInput" value="Submit your csv: ">Submit the file and the signature file: </label>
                     <input type="file" multiple="multiple" id="verify_fileInput">
-                    Second you can choose between sign the file with cothority and have the possibility to download it on
-                    your computer. Or verifiy your signature file.
-                    If you want to verify, you need to upload the JSON signature file too.
+                    <br>
+                    The hash of the file and the hash registred in the signature file will be compared. Next the signature
+                    will be verified using the hash and the aggregate key.
+                    <br><br>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
