@@ -63,11 +63,11 @@ function updateList() { // mettre en async si dispo: chrome 55
     //console.log(a);
     runGenerator(function* bonjour() {
         var listNodes = [];
-        var message = yield websocket(7101);
+        var message = yield websocket(7003);
         listNodes.push(nodeCreation(message));
-        message = yield websocket(7102);
+        message = yield websocket(7005);
         listNodes.push(nodeCreation(message));
-        message = yield  websocket(7103);
+        message = yield  websocket(7007);
         listNodes.push(nodeCreation(message));
         update(listNodes);
     });
@@ -89,16 +89,16 @@ function nodeCreation(message) {
     }
 
     var node = new node(
-        message.Status.map.Status.value.module.map.Available_Services.value,
-        message.Status.map.Status.value.module.map.ConnType.value,
-        message.Status.map.Status.value.module.map.Description.value,
-        message.Status.map.Status.value.module.map.Host.value,
-        message.Status.map.Status.value.module.map.Port.value,
-        message.Status.map.Status.value.module.map.RX_bytes.value,
-        message.Status.map.Status.value.module.map.System.value,
-        message.Status.map.Status.value.module.map.TX_bytes.value,
-        message.Status.map.Status.value.module.map.Uptime.value,
-        message.Status.map.Status.value.module.map.Version.value
+        message.system.map.Status.value.field.map.Available_Services.value,
+        message.system.map.Status.value.field.map.ConnType.value,
+        message.system.map.Status.value.field.map.Description.value,
+        message.system.map.Status.value.field.map.Host.value,
+        message.system.map.Status.value.field.map.Port.value,
+        message.system.map.Status.value.field.map.RX_bytes.value,
+        message.system.map.Status.value.field.map.System.value,
+        message.system.map.Status.value.field.map.TX_bytes.value,
+        message.system.map.Status.value.field.map.Uptime.value,
+        message.system.map.Status.value.field.map.Version.value
     );
     //console.log(message.Status.map.Status.value.module.map.Available_Services.value);
     //console.log(node);
