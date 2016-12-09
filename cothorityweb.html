@@ -110,24 +110,8 @@
             <div class="panel-body">
                 <div>
                     <br>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <label for="file_fileInput">Submit your file:</label>
-
-                        </div>
-                        <div class="col-xs-4">
-                            <label for="signature_fileInput">Submit your signature file: </label>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <input type="file" id="file_fileInput">
-                        </div>
-                        <div class="col-xs-4">
-                            <input type="file" id="signature_fileInput">
-                        </div>
-                    </div>
+                    <label for="signature_fileInput" value="Submit your csv: ">Submit your file: </label>
+                    <input type="file" id="signature_fileInput">
                     <br>
                     The file will be signed collectively by the conodes. Then you have
                     the possibility to download a JSON file with the signature and other informations.
@@ -156,8 +140,24 @@
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
                 <div>
-                    <label for="verify_fileInput" value="Submit your csv: ">Submit the file and the signature file: </label>
-                    <input type="file" multiple="multiple" id="verify_fileInput">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <label for="verifiy_file_fileInput">Submit your file:</label>
+
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="verify_signature_fileInput">Submit your signature file: </label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="file" id="verifiy_file_fileInput">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="file" id="verify_signature_fileInput">
+                        </div>
+                    </div>
                     <br>
                     The hash of the file and the hash registred in the signature file will be compared. Next the signature
                     will be verified using the hash and the aggregate key.
