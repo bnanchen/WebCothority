@@ -97,7 +97,7 @@
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-    <!-- First collapse -->
+    <!-- Signature collapse -->
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
@@ -128,7 +128,7 @@
         </div>
     </div>
 
-    <!-- Second collapse -->
+    <!-- Verification collapse -->
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
@@ -140,8 +140,27 @@
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
                 <div>
-                    <label for="verify_fileInput" value="Submit your csv: ">Submit the file and the signature file: </label>
-                    <input type="file" multiple="multiple" id="verify_fileInput">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <label for="verify_file_fileInput">Submit your file:</label>
+
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="verify_signature_fileInput">Submit your signature file: </label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="file" id="verify_file_fileInput">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="file" id="verify_signature_fileInput">
+                        </div>
+                    </div>
+                    <!-- Old Version with one upload button -->
+                   <!-- <label for="verify_fileInput" value="Submit your csv: ">Submit the file and the signature file: </label>
+                    <input type="file" multiple="multiple" id="verify_fileInput"> -->
                     <br>
                     The hash of the file and the hash registred in the signature file will be compared. Next the signature
                     will be verified using the hash and the aggregate key.
