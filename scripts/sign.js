@@ -73,7 +73,7 @@ function sign(fileToSign, filename, message) {
  * @param signatureToVerify
  * @param message
  */
-function verifySignature(fileToVerify, signatureToVerify, message) {
+function verifySignature(fileToVerify, signatureToVerify) {
     var objectJSON = getJSONFileInObject(signatureToVerify);
     var hash_verification = false;
     var signature_verification = false;
