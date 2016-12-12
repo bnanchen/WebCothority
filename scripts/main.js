@@ -6,8 +6,9 @@ $(document).ready(function () {
     updateList();
     // next call each 3 seconds the updateList() function:
     //setInterval(function () {
-        updateList();
+	//        updateList();
     //}, 3000);
+        console.log(listNodes);
 
     // $("#hello").on("click", function(event) {
     //   alert(list[0].name);

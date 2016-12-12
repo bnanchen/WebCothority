@@ -4,26 +4,24 @@
 function websocket(portNumber) {
     var ProtoBuf = dcodeIO.ProtoBuf;
     var status = ProtoBuf.loadProto(`
-                message SignRequest {
-                    required bytes Hash = 1;
-                    required string NodeList = 2;
-                }
-
-                message SignReply {
-                    required bytes Signature = 1;
-                    required bytes Aggregate = 2;
-                }
+				message ServerIdentity{
+    				required bytes public = 1;
+    				required bytes id = 2;
+    				required string address = 3;
+    				required string description = 4;
+				}
 
                 message Request {
                 }
 
-                message Status {
-                    map<string, string> field = 1;
-                }
+				message Response {
+    				map<string, Status> system = 1;
+    				optional ServerIdentity server = 2;
 
-                message Response {
-                    map<string, Status> system = 1;
-                }
+				    message Status {
+        				map<string, string> field = 1;
+    				}
+				}
                 `);
     var socket = new WebSocket("ws://localhost:" + portNumber + "/Status/Request");
     socket.binaryType = "arraybuffer";
@@ -70,37 +68,33 @@ function websocket_sign(portNumber, file) {
     var socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
     var protoSign = ProtoBuf.loadProto(`
     
-        message ServerIdentity {
-            required string Public = 1;
-            required string Address = 2;
-            required string ID = 3;
-        }
-    
-        message Roster {
-            required bytes id = 1;
-            repeated ServerIdentity list = 2;
-            required bytes aggregate = 3;
-        }
+message ServerIdentity{
+    required bytes public = 1;
+    required bytes id = 2;
+    required string address = 3;
+    required string description = 4;
+}
 
-       message Sign {
-            required Roster NodeList = 1;
-            required bytes Hash = 2;
-        }
+message Roster {
+    optional bytes id = 1;
+    repeated ServerIdentity list = 2;
+    optional bytes aggregate = 3;
+}
 
-        message SignatureResponse {
-            required bytes Aggregate = 1;
-            required bytes Signature = 2;
-        }
-        
-                message SignRequest {
-                    required bytes Hash = 1;
-                    required string NodeList = 2;
-                }
+message SignatureRequestFake {
+    required bytes roster = 1;
+    required bytes message = 2;
+}
 
-                message SignReply {
-                    required bytes Signature = 1;
-                    required bytes Aggregate = 2;
-                }
+message SignatureRequest {
+    required bytes message = 1;
+    required Roster roster = 2;
+}
+
+message SignatureResponse {
+    required bytes aggregate = 1;
+    required bytes signature = 2;
+}
                 `);
     socket.binaryType = "arraybuffer";
     if (socket.readyState != 0 && socket.readyState != 1) {
@@ -108,16 +102,22 @@ function websocket_sign(portNumber, file) {
     }
     // when the socket is opened (reaction):
     socket.onopen = function () {
-        var signMsgProto = protoSign.build("Sign");
+        var signMsgProto = protoSign.build("SignatureRequest");
         var rosterProto = protoSign.build("Roster");
+        var siProto = protoSign.build("ServerIdentity");
         nacl_factory.instantiate(function(nacl) {
-            var rosterMsg = new rosterProto({id: hexToBytes("deadbeef"), list: [], aggregate: hexToBytes("cafe")});
-            var hash = nacl.crypto_hash_sha256(bytesToHex(file)); // Uint8Array
-            var signMsg = new signMsgProto({Hash: hash, NodeList: rosterMsg});
-            var signMsgHex = signMsg.encode().toHex(); // finish doesn't exist
-            var bytes = hexToBytes(signMsgHex);
-            socket.send(bytes);
-            console.log("sent signRequest");
+        	// Create a list of ServerIdentities for the roster.
+        	var list = listNodes.map(function(node){
+        		var s = node.server;
+        		return new siProto({public: s.public, id: s.id, address: s.address,
+        			description: s.description});
+        	})
+			var rosterMsg = new rosterProto({list:list});
+
+			// Calculate the hash and create the SignatureRequest.
+            var hash = nacl.crypto_hash_sha256(bytesToHex(file));
+            var signMsg = new signMsgProto({roster: rosterMsg, message: hash});
+            socket.send(signMsg.toArrayBuffer());
         });
     };
 
@@ -128,6 +128,7 @@ function websocket_sign(portNumber, file) {
                 var returnedMessage;
 
                 returnedMessage = protoSign.build("SignatureResponse").decode(e.data);
+                console.log(returnedMessage)
                 resolve(returnedMessage);
             };
 

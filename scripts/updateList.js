@@ -62,7 +62,7 @@ function updateList() { // mettre en async si dispo: chrome 55
     //var a = websocket(7101);
     //console.log(a);
     runGenerator(function* bonjour() {
-        var listNodes = [];
+        listNodes = [];
         var message = yield websocket(7003);
         listNodes.push(nodeCreation(message));
         message = yield websocket(7005);
@@ -75,7 +75,8 @@ function updateList() { // mettre en async si dispo: chrome 55
 
 function nodeCreation(message) {
     // must put the constructor inside runGenerator(g) because overshadowing
-    function node(available_services, connType, description, host, port, rx_bytes, system, tx_bytes, uptime, version) {
+    function node(available_services, connType, description, host, port, rx_bytes,
+    system, tx_bytes, uptime, version, server) {
         this.available_services = available_services;
         this.connType = connType;
         this.description = description;
@@ -86,6 +87,7 @@ function nodeCreation(message) {
         this.tx_bytes = tx_bytes; // envoi
         this.uptime = uptime;
         this.version = version;
+        this.server = server;
     }
 
     var node = new node(
@@ -98,7 +100,8 @@ function nodeCreation(message) {
         message.system.map.Status.value.field.map.System.value,
         message.system.map.Status.value.field.map.TX_bytes.value,
         message.system.map.Status.value.field.map.Uptime.value,
-        message.system.map.Status.value.field.map.Version.value
+        message.system.map.Status.value.field.map.Version.value,
+        message.server
     );
     //console.log(message.Status.map.Status.value.module.map.Available_Services.value);
     //console.log(node);

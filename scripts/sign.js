@@ -9,8 +9,8 @@
 function sign(fileToSign, filename, message) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = new Uint8Array(message.Signature.toArrayBuffer());
-        var aggregateKey = new Uint8Array(message.Aggregate.toArrayBuffer());
+        var signature = new Uint8Array(message.signature.toArrayBuffer());
+        var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
 
 
