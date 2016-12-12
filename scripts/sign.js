@@ -12,7 +12,7 @@ function sign(fileToSign, filename, message) {
         var signature = new Uint8Array(message.signature.toArrayBuffer());
         var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
-
+        console.log(message);
 
         /*
         var keys = nacl.crypto_sign_keypair(); // return: {signPk, signSk} with signPk public key and signSk private key
@@ -73,16 +73,17 @@ function sign(fileToSign, filename, message) {
  * @param signatureToVerify
  * @param message
  */
-function verifySignature(fileToVerify, signatureToVerify, message) {
+function verifySignature(fileToVerify, signatureToVerify) {
     var objectJSON = getJSONFileInObject(signatureToVerify);
     var hash_verification = false;
     var signature_verification = false;
 
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = fromBase64toUint8Array(objectJSON.signature);
+        var signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
         var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
+        console.log(signature, objectJSON.signature)
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
         var hashJSON = fromBase64toUint8Array(objectJSON.hash);
@@ -92,6 +93,7 @@ function verifySignature(fileToVerify, signatureToVerify, message) {
 
         // Verification of the signature with the hash and the aggregate public key:
         var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
+        console.log(verification);
         if (verification) {
             signature_verification = true;
         }

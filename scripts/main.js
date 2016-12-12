@@ -74,10 +74,9 @@ $(document).ready(function () {
 
             var fileAsArrayBuffer = yield takeCareOf(file.files[(jsonFile+1) % 2], true);
             var signatureAsString = yield takeCareOf(file.files[jsonFile], false);
-            var message = yield websocket_sign(7101, fileAsArrayBuffer);
 
             $("#button_verify_signature").unbind('click').click(function () {
-                verifySignature(fileAsArrayBuffer, signatureAsString, message);
+                verifySignature(fileAsArrayBuffer, signatureAsString);
             });
         });
     });

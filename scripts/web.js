@@ -81,19 +81,15 @@ message Roster {
     optional bytes aggregate = 3;
 }
 
-message SignatureRequestFake {
-    required bytes roster = 1;
-    required bytes message = 2;
-}
-
 message SignatureRequest {
     required bytes message = 1;
     required Roster roster = 2;
 }
 
 message SignatureResponse {
-    required bytes aggregate = 1;
+    required bytes hash = 1; 
     required bytes signature = 2;
+    required bytes aggregate = 3;
 }
                 `);
     socket.binaryType = "arraybuffer";
@@ -109,6 +105,7 @@ message SignatureResponse {
         	// Create a list of ServerIdentities for the roster.
         	var list = listNodes.map(function(node){
         		var s = node.server;
+        		console.log(s.public);
         		return new siProto({public: s.public, id: s.id, address: s.address,
         			description: s.description});
         	})
@@ -128,7 +125,7 @@ message SignatureResponse {
                 var returnedMessage;
 
                 returnedMessage = protoSign.build("SignatureResponse").decode(e.data);
-                console.log(returnedMessage)
+                console.log(returnedMessage);
                 resolve(returnedMessage);
             };
 
