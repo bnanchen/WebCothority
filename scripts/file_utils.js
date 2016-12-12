@@ -11,7 +11,6 @@ function takeCareOf(file, asArrayBuffer) {
         // usage of a Promise:
         return new Promise(function (resolve, reject) {
             reader.onload = function(event) {
-                //sign(event.target.result, file); // file read in ArrayBuffer (typeof event.target.result)
                 resolve(event.target.result);
             };
         });

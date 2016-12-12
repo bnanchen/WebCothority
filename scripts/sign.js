@@ -6,28 +6,14 @@
  * @param filename
  * @param message
  */
-function sign(fileToSign, filename, message) {
+function sign(fileToSign, filename, listNodes, message) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
         var signature = new Uint8Array(message.signature.toArrayBuffer());
         var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
+
         console.log(message);
-
-        /*
-        var keys = nacl.crypto_sign_keypair(); // return: {signPk, signSk} with signPk public key and signSk private key
-        var signedFile = nacl.crypto_sign(sha256File, keys.signSk); // typeof: Uint8Array
-
-        if (nacl.crypto_sign_open(signedFile, keys.signPk) == null) {
-            // signature is not good
-            console.log("arf");
-        } else {
-            // signature is good
-            console.log("Good signature");
-        }
-
-        var signedFileBase64 = btoa(String.fromCharCode.apply(null, signedFile));
-        */
 
         var signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
         var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, aggregateKey));
@@ -35,34 +21,13 @@ function sign(fileToSign, filename, message) {
 
         // if the download button doesn't exist: create it
         if ($("#download_button").length == 0) {
-            $("#add_download_button").append("<button class='btn btn-default' type='button' id='download_button'>" + "Download the Signature" + "</button>");
+            $("#add_download_button").append("<button class='btn btn-primary' type='button' id='download_button'>" + "Download the Signature" + "</button>");
         }
 
         // download the JSON file in clicking on the download_button
         $("#download_button").unbind('click').click(function () {
             downloadJSONFile(filename, signatureBase64, aggregateKeyBase64, hashBase64);
         });
-
-
-        // ====================== OLD VERSION ================================
-        // instantiate the nacl module:
-        /* nacl_factory.instantiate(function(nacl) {
-         var sha256File = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // Uint8Array
-         var keys = nacl.crypto_sign_keypair(); // return: {signPk, signSk} with signPk public key and signSk private key
-         var signedFile = nacl.crypto_sign(sha256File, keys.signSk); // Uint8Array
-         if (nacl.crypto_sign_open(signedFile, keys.signPk) == null) {
-         console.log("arf"); // signature is not good
-         } else {
-         console.log("Good signature");
-         }
-         // translate the signature in base64:
-         var signedFilebase64 = btoa(String.fromCharCode.apply(null, signedFile));
-         //alert(signedFilebase64);
-         $("#add_download_button").append("<button class='btn btn-default' type='button' id='download_button'>"+ "Download the Signature" + "</button>");
-         $("#download_button").click(function() {
-         downloadSignature("signature_of_" + file.fileName, signedFilebase64);
-         });
-         });*/
     });
 }
 
@@ -83,7 +48,6 @@ function verifySignature(fileToVerify, signatureToVerify) {
         var signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
         var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
-        console.log(signature, objectJSON.signature)
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
         var hashJSON = fromBase64toUint8Array(objectJSON.hash);
@@ -93,7 +57,6 @@ function verifySignature(fileToVerify, signatureToVerify) {
 
         // Verification of the signature with the hash and the aggregate public key:
         var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
-        console.log(verification);
         if (verification) {
             signature_verification = true;
         }
@@ -140,7 +103,6 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
     var day = currentTime.getDay();
     var month = currentTime.getMonth()+1; // January is number 0
     var year = currentTime.getFullYear();
-
 
     var jsonFile = {
         filename: filename,
