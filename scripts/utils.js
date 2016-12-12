@@ -32,22 +32,6 @@ function bytesToHex(byteArray) {
 }
 
 /**
- *
- * @param hex
- * @returns {Uint8Array}
- */
-function hexToBytesX(hex) {
-    // conversion to a binary array:
-    var byteArray = new Uint8Array(hex.length / 2);
-    for (var i = 0; i < byteArray.length; i++) {
-        // conversion du string en bits avec parseInt:
-        byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
-    }
-    // create a blob used to send the data:
-    return byteArray;
-}
-
-/**
  * Compare two Uint8Array, if they are the same return true, otherwise false.
  *
  * @param first

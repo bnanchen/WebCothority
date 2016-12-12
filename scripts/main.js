@@ -5,9 +5,10 @@
 $(document).ready(function () {
     updateList();
     // next call each 3 seconds the updateList() function:
-    setInterval(function () {
-        updateList();
-    }, 3000);
+    //setInterval(function () {
+	//        updateList();
+    //}, 3000);
+        console.log(listNodes);
 
     // $("#hello").on("click", function(event) {
     //   alert(list[0].name);
@@ -26,7 +27,7 @@ $(document).ready(function () {
 
         runGenerator(function* waitingfile() {
             var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
-            var message = yield websocket_sign(7101, fileAsArrayBuffer);
+            var message = yield websocket_sign(7003, fileAsArrayBuffer);
 
             $("#button_sign_file").unbind('click').click(function() {
                 sign(fileAsArrayBuffer, getFilename(file.value), message);
