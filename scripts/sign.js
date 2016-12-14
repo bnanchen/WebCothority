@@ -6,15 +6,16 @@
  * @param filename
  * @param message
  */
-function sign(fileToSign, filename, listNodes, message) {
+function saveToFile(fileToSign, filename, signature, hashd, aggregateKey) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = new Uint8Array(message.signature.toArrayBuffer());
-        var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
+        //var signature = new Uint8Array(message.signature.toArrayBuffer());
+        //var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
+        console.log("sig: " + signature);
+        console.log("agg: " + aggregateKey);
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
-
-        console.log(message);
-
+        console.log("calc. hash: " + hash);
+        console.log(nacl.crypto_hash_sha256(hash));
         var signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
         var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, aggregateKey));
         var hashBase64 = btoa(String.fromCharCode.apply(null, hash));
@@ -48,7 +49,9 @@ function verifySignature(fileToVerify, signatureToVerify) {
         var signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
         var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
-
+        console.log("sig: " + signature);
+        console.log("agg: " + aggregate);
+        console.log("hash " + hash);
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
         var hashJSON = fromBase64toUint8Array(objectJSON.hash);
         if (isEqualTo(hash, hashJSON)) {
@@ -57,6 +60,7 @@ function verifySignature(fileToVerify, signatureToVerify) {
 
         // Verification of the signature with the hash and the aggregate public key:
         var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
+        console.log(verification)
         if (verification) {
             signature_verification = true;
         }

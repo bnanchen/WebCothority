@@ -5,9 +5,9 @@
 $(document).ready(function () {
     updateList();
     // next call each 3 seconds the updateList() function:
-    setInterval(function () {
-        updateList();
-    }, 3000);
+    // setInterval(function () {
+    //     updateList();
+    // }, 3000);
 
     /**
      * Signature part
@@ -19,7 +19,8 @@ $(document).ready(function () {
             var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
             var message = yield websocket_sign(7003, fileAsArrayBuffer);
 
-            sign(fileAsArrayBuffer, getFilename(file.value), message);
+            saveToFile(fileAsArrayBuffer, getFilename(file.value),
+                new Uint8Array(message[0].signature.toArrayBuffer()), new Uint8Array(message[0].hash.toArrayBuffer()), message[1]);
         });
 
     });
@@ -151,7 +152,7 @@ $(document).ready(function () {
      });
      }); */
     /*
-     // If the button is clicked call the sign part:
+     // If the button is clicked call the saveToFile part:
      $("#sign_button").click(function() {
      runGenerator(function* bonjour() {
      var message = yield websocket_sign(7101, "1234");

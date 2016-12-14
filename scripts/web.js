@@ -61,6 +61,7 @@ function websocket_status(portNumber) {
  * @returns {*}
  */
 function websocket_sign(portNumber, file) {
+    var aggP = new Uint8Array(32);
     var ProtoBuf = dcodeIO.ProtoBuf;
     var socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
     var protoSign = ProtoBuf.loadProto(`
@@ -86,7 +87,7 @@ function websocket_sign(portNumber, file) {
         message SignatureResponse {
             required bytes hash = 1; 
             required bytes signature = 2;
-            required bytes aggregate = 3;
+            required bytes aggregate = 3; 
         }
                 `);
     socket.binaryType = "arraybuffer";
@@ -100,16 +101,32 @@ function websocket_sign(portNumber, file) {
         var siProto = protoSign.build("ServerIdentity");
         nacl_factory.instantiate(function(nacl) {
             // Create a list of ServerIdentities for the roster.
-            var list = listNodes.map(function(node){
+            var agg = [];
+            var list = listNodes.map(function(node, index){
                 var s = node.server;
+                var pub = new Uint8Array(s.public.toArrayBuffer());
+                var pubNC = [gf(), gf(), gf(), gf()];
+                unpackneg(pubNC, pub);
+                if (index == 0){
+                    agg = pubNC;
+                } else {
+                    add(agg, pubNC);
+                }
                 return new siProto({public: s.public, id: s.id, address: s.address,
                     description: s.description});
-            })
+            });
+            pack(aggP, agg);
             var rosterMsg = new rosterProto({list:list});
+
+            // TODO new way to calculate the aggregate key
+            // [BEGIN]
+            // agg will be the public aggregated key.
+            // [END]
 
             // Calculate the hash and create the SignatureRequest.
             var hash = nacl.crypto_hash_sha256(bytesToHex(file));
             var signMsg = new signMsgProto({roster: rosterMsg, message: hash});
+            console.log(signMsg)
             socket.send(signMsg.toArrayBuffer());
         });
     };
@@ -118,10 +135,15 @@ function websocket_sign(portNumber, file) {
         // usage of a Promise:
         return new Promise(function (resolve, reject) {
             socket.onmessage = function(e) {
-                var returnedMessage;
+                var listreturnedMessage = [];
 
-                returnedMessage = protoSign.build("SignatureResponse").decode(e.data);
-                resolve(returnedMessage);
+                var returnedMessage = protoSign.build("SignatureResponse").decode(e.data);
+
+                listreturnedMessage.push(returnedMessage);
+                console.log(returnedMessage);
+                listreturnedMessage.push(aggP);
+                console.log(aggP);
+                resolve(listreturnedMessage);
             };
 
             socket.onerror = function (e) {
