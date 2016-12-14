@@ -63,6 +63,7 @@ function websocket_status(portNumber) {
 function websocket_sign(portNumber, file) {
     var ProtoBuf = dcodeIO.ProtoBuf;
     var socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
+    var aggP = new Uint8Array(32);
     var protoSign = ProtoBuf.loadProto(`
     
         message ServerIdentity{
@@ -100,11 +101,25 @@ function websocket_sign(portNumber, file) {
         var siProto = protoSign.build("ServerIdentity");
         nacl_factory.instantiate(function(nacl) {
             // Create a list of ServerIdentities for the roster.
-            var list = listNodes.map(function(node){
+            var agg = [];
+            var list = listNodes.map(function(node, index){
                 var s = node.server;
+                var pub = new Uint8Array(s.public.toArrayBuffer());
+                var pubNeg = [gf(), gf(), gf(), gf()];
+                unpackneg(pubNeg, pub);
+                var pubPosArr = new Uint8Array(32);
+                pack(pubPosArr, pubNeg);
+                var pubPos = [gf(), gf(), gf(), gf()];
+                unpackneg(pubPos, pubPosArr);
+                if (index == 0){
+                    agg = pubPos;
+                } else {
+                    add(agg, pubPos);
+                }
                 return new siProto({public: s.public, id: s.id, address: s.address,
-                    description: s.description});
-            })
+                        description: s.description});
+            });
+            pack(aggP, agg);
             var rosterMsg = new rosterProto({list:list});
 
             // Calculate the hash and create the SignatureRequest.
@@ -120,7 +135,7 @@ function websocket_sign(portNumber, file) {
             socket.onmessage = function(e) {
                 var returnedMessage;
 
-                returnedMessage = protoSign.build("SignatureResponse").decode(e.data);
+                returnedMessage = [ protoSign.build("SignatureResponse").decode(e.data), aggP];
                 resolve(returnedMessage);
             };
 

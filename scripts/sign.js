@@ -1,22 +1,18 @@
-// Signing part
 /**
- *
+ * Process the information to allow the user to download the signature JSON file
  *
  * @param fileToSign
  * @param filename
  * @param message
  */
-function sign(fileToSign, filename, listNodes, message) {
+function saveToFile(fileToSign, filename, message) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = new Uint8Array(message.signature.toArrayBuffer());
-        var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
+        var signature = new Uint8Array(message[0].signature.toArrayBuffer());
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
 
-        console.log(message);
-
         var signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
-        var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, aggregateKey));
+        var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, message[1]));
         var hashBase64 = btoa(String.fromCharCode.apply(null, hash));
 
         // if the download button doesn't exist: create it
@@ -32,11 +28,10 @@ function sign(fileToSign, filename, listNodes, message) {
 }
 
 /**
- *
+ * Verify the hash of the file and the signature and display the result to the user
  *
  * @param fileToVerify
  * @param signatureToVerify
- * @param message
  */
 function verifySignature(fileToVerify, signatureToVerify) {
     var objectJSON = getJSONFileInObject(signatureToVerify);
@@ -90,7 +85,7 @@ function verifySignature(fileToVerify, signatureToVerify) {
 }
 
 /**
- *
+ * Let the user download the JSON signature file to his computer
  *
  * @param filename
  * @param signature

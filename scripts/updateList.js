@@ -1,5 +1,5 @@
 /**
- * Generator
+ * update the Status List
  */
 function updateList() {
     runGenerator(function* bonjour() {
@@ -14,6 +14,12 @@ function updateList() {
     });
 }
 
+/**
+ * Create a node from the information received from the Cothority
+ *
+ * @param message status information received from the Cothority
+ * @returns {node}
+ */
 function nodeCreation(message) {
     // must put the constructor inside runGenerator(g) because overshadowing
     function node(available_services, connType, description, host, port, rx_bytes,
