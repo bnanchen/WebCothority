@@ -85,7 +85,7 @@ function verifySignature(fileToVerify, signatureToVerify) {
 }
 
 /**
- *
+ * Let the user download the JSON signature file to his computer
  *
  * @param filename
  * @param signature
