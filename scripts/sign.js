@@ -6,18 +6,20 @@
  * @param filename
  * @param message
  */
-function saveToFile(fileToSign, filename, signature, hashd, aggregateKey) {
+function saveToFile(fileToSign, filename, message, agg) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        //var signature = new Uint8Array(message.signature.toArrayBuffer());
-        //var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
-        console.log("sig: " + signature);
-        console.log("agg: " + aggregateKey);
+        var signature = new Uint8Array(message.signature.toArrayBuffer());
+        var aggregateKey = new Uint8Array(message.aggregate.toArrayBuffer());
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
-        console.log("calc. hash: " + hash);
-        console.log(nacl.crypto_hash_sha256(hash));
+
+        console.log(message);
+        console.log(aggregateKey, agg);
+
         var signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
-        var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, aggregateKey));
+        var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, agg));
+        // var aggregateKeyBase64_2 = btoa(String.fromCharCode.apply(null, agg));
+        // console.log(aggregateKeyBase64, aggregateKeyBase64_2)
         var hashBase64 = btoa(String.fromCharCode.apply(null, hash));
 
         // if the download button doesn't exist: create it
@@ -48,10 +50,9 @@ function verifySignature(fileToVerify, signatureToVerify) {
     nacl_factory.instantiate(function (nacl) {
         var signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
         var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
+        console.log(aggregate, objectJSON["aggregate key"])
         var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
-        console.log("sig: " + signature);
-        console.log("agg: " + aggregate);
-        console.log("hash " + hash);
+
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
         var hashJSON = fromBase64toUint8Array(objectJSON.hash);
         if (isEqualTo(hash, hashJSON)) {
@@ -60,7 +61,6 @@ function verifySignature(fileToVerify, signatureToVerify) {
 
         // Verification of the signature with the hash and the aggregate public key:
         var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
-        console.log(verification)
         if (verification) {
             signature_verification = true;
         }
