@@ -147,7 +147,11 @@ function websocket_sign(portNumber, file) {
     return loadReceivedMessage();
 }
 
-
+/**
+ * Source: https://davidwalsh.name/async-generators
+ *
+ * @param g
+ */
 function runGenerator(g) {
     var it = g(), ret;
     (function iterate(val) {

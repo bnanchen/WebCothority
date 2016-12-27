@@ -3,9 +3,13 @@
  * MAIN
  */
 $(document).ready(function () {
+    /**
+     * Status part
+     */
     updateList();
     // next call each 3 seconds the updateList() function:
     setInterval(function () {
+        // TODO recursive method to contact nodes
         updateList();
     }, 3000);
 
