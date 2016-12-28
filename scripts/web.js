@@ -148,7 +148,7 @@ function websocket_sign(portNumber, file) {
 }
 
 /**
- * Source: https://davidwalsh.name/async-generators
+ *
  *
  * @param g
  */
@@ -158,13 +158,7 @@ function runGenerator(g) {
         ret = it.next(val);
 
         if (!ret.done) {
-            if("then" in ret.value) {
-                ret.value.then(iterate);
-            } else {
-                setTimeout(function() {
-                    iterate(ret.value);
-                }, 0);
-            }
+            ret.value.then(iterate);
         }
     })();
 }
