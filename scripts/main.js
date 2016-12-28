@@ -17,10 +17,10 @@ $(document).ready(function () {
      * Signature part
      */
     $("#signature_fileInput").change(function() {
-        var file = this;
+        const file = this;
         runGenerator(function* waitingfile() {
-            var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
-            var message = yield websocket_sign(7003, fileAsArrayBuffer);
+            const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
+            const message = yield websocket_sign(7003, fileAsArrayBuffer);
 
             saveToFile(fileAsArrayBuffer, getFilename(file.value), message);
         });
@@ -31,10 +31,10 @@ $(document).ready(function () {
      * Verification part
      */
     $("#verify_file_fileInput").change(function() {
-        var file = this;
+        const file = this;
 
         runGenerator(function* waitingfile() {
-            var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
+            const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
 
             $("#button_verify_signature").unbind('click').click(function() {
                 // Verify that the number of files is 2:
@@ -48,11 +48,11 @@ $(document).ready(function () {
             });
 
             $("#verify_signature_fileInput").change(function() {
-                var file = this;
+                const file = this;
 
                 runGenerator(function* waitingfile() {
-                    var signatureAsString = yield takeCareOf(file.files[0], false);
-                    var nameFile = getFileExtension(file.files[0].name);
+                    const signatureAsString = yield takeCareOf(file.files[0], false);
+                    const nameFile = getFileExtension(file.files[0].name);
 
                     // Verify that one of the two files has .json extension:
                     if (nameFile != "json") {
@@ -71,11 +71,11 @@ $(document).ready(function () {
     });
 
     $("#verify_signature_fileInput").change(function() {
-        var file = this;
+        const file = this;
 
         runGenerator(function* waitingfile() {
-            var signatureAsString = yield takeCareOf(file.files[0], false);
-            var nameFile = getFileExtension(file.files[0].name);
+            const signatureAsString = yield takeCareOf(file.files[0], false);
+            const nameFile = getFileExtension(file.files[0].name);
 
             $("#button_verify_signature").unbind('click').click(function() {
                 // Verify that the number of files is 2:
@@ -89,10 +89,10 @@ $(document).ready(function () {
             });
 
             $("#verify_file_fileInput").change(function() {
-                var file = this;
+                const file = this;
 
                 runGenerator(function* waitingfile() {
-                    var fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
+                    const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
 
                     // Verify that one of the two files has .json extension:
                     if (nameFile != "json") {

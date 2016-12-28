@@ -2,9 +2,9 @@
  * update the Status List
  */
 function updateList() {
-    runGenerator(function* bonjour() {
+    runGenerator(function* generator() {
         listNodes = [];
-        var message = yield websocket_status(7003);
+        let message = yield websocket_status(7003);
         listNodes.push(nodeCreation(message));
         message = yield websocket_status(7005);
         listNodes.push(nodeCreation(message));
@@ -37,7 +37,7 @@ function nodeCreation(message) {
         this.server = server;
     }
 
-    var node = new node(
+    const currentNode = new node(
         message.system.map.Status.value.field.map.Available_Services.value,
         message.system.map.Status.value.field.map.ConnType.value,
         message.system.map.Status.value.field.map.Description.value,
@@ -50,5 +50,5 @@ function nodeCreation(message) {
         message.system.map.Status.value.field.map.Version.value,
         message.server
     );
-    return node;
+    return currentNode;
 }

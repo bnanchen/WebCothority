@@ -2,8 +2,8 @@
  * File with useful methods concerning Protobuf.
  */
 function websocket_status(portNumber) {
-    var ProtoBuf = dcodeIO.ProtoBuf;
-    var status = ProtoBuf.loadProto(`
+    const ProtoBuf = dcodeIO.ProtoBuf;
+    const status = ProtoBuf.loadProto(`
 				message ServerIdentity{
     				required bytes public = 1;
     				required bytes id = 2;
@@ -23,17 +23,17 @@ function websocket_status(portNumber) {
     				}
 				}
                 `);
-    var socket = new WebSocket("ws://localhost:" + portNumber + "/Status/Request");
+    const socket = new WebSocket("ws://localhost:" + portNumber + "/Status/Request");
     socket.binaryType = "arraybuffer";
     if (socket.readyState != 0 && socket.readyState != 1) {
         console.log("The opening of the WebSocket doesn't go well. Ready State constant:"+ socket.readyState);
     }
     // when the socket is opened (reaction):
     socket.onopen = function () {
-        var requestProto = status.build("Request");
-        var request = new requestProto({});
-        var requestHex = request.encode().toHex(); // finish doesn't exist
-        var bytes = hexToBytes(requestHex);
+        const requestProto = status.build("Request");
+        const request = new requestProto({});
+        const requestHex = request.encode().toHex(); // finish doesn't exist
+        const bytes = hexToBytes(requestHex);
         socket.send(bytes);
     };
 
@@ -41,7 +41,7 @@ function websocket_status(portNumber) {
         // usage of a Promise:
         return new Promise(function (resolve, reject) {
             socket.onmessage = function(e) {
-                var returnedMessage;
+                let returnedMessage;
                 returnedMessage = status.build("Response").decode(e.data);
 
                 resolve(returnedMessage);
@@ -61,10 +61,10 @@ function websocket_status(portNumber) {
  * @returns {*}
  */
 function websocket_sign(portNumber, file) {
-    var ProtoBuf = dcodeIO.ProtoBuf;
-    var socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
-    var aggP = new Uint8Array(32);
-    var protoSign = ProtoBuf.loadProto(`
+    const ProtoBuf = dcodeIO.ProtoBuf;
+    const socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
+    const aggP = new Uint8Array(32);
+    const protoSign = ProtoBuf.loadProto(`
     
         message ServerIdentity{
             required bytes public = 1;
@@ -96,20 +96,20 @@ function websocket_sign(portNumber, file) {
     }
     // when the socket is opened (reaction):
     socket.onopen = function () {
-        var signMsgProto = protoSign.build("SignatureRequest");
-        var rosterProto = protoSign.build("Roster");
-        var siProto = protoSign.build("ServerIdentity");
+        const signMsgProto = protoSign.build("SignatureRequest");
+        const rosterProto = protoSign.build("Roster");
+        const siProto = protoSign.build("ServerIdentity");
         nacl_factory.instantiate(function(nacl) {
             // Create a list of ServerIdentities for the roster.
-            var agg = [];
-            var list = listNodes.map(function(node, index){
-                var s = node.server;
-                var pub = new Uint8Array(s.public.toArrayBuffer());
-                var pubNeg = [gf(), gf(), gf(), gf()];
+            let agg = [];
+            const list = listNodes.map(function(node, index){
+                const s = node.server;
+                const pub = new Uint8Array(s.public.toArrayBuffer());
+                const pubNeg = [gf(), gf(), gf(), gf()];
                 unpackneg(pubNeg, pub);
-                var pubPosArr = new Uint8Array(32);
+                const pubPosArr = new Uint8Array(32);
                 pack(pubPosArr, pubNeg);
-                var pubPos = [gf(), gf(), gf(), gf()];
+                const pubPos = [gf(), gf(), gf(), gf()];
                 unpackneg(pubPos, pubPosArr);
                 if (index == 0){
                     agg = pubPos;
@@ -117,14 +117,14 @@ function websocket_sign(portNumber, file) {
                     add(agg, pubPos);
                 }
                 return new siProto({public: s.public, id: s.id, address: s.address,
-                        description: s.description});
+                    description: s.description});
             });
             pack(aggP, agg);
-            var rosterMsg = new rosterProto({list:list});
+            const rosterMsg = new rosterProto({list:list});
 
             // Calculate the hash and create the SignatureRequest.
-            var hash = nacl.crypto_hash_sha256(bytesToHex(file));
-            var signMsg = new signMsgProto({roster: rosterMsg, message: hash});
+            const hash = nacl.crypto_hash_sha256(bytesToHex(file));
+            const signMsg = new signMsgProto({roster: rosterMsg, message: hash});
             socket.send(signMsg.toArrayBuffer());
         });
     };
@@ -133,7 +133,7 @@ function websocket_sign(portNumber, file) {
         // usage of a Promise:
         return new Promise(function (resolve, reject) {
             socket.onmessage = function(e) {
-                var returnedMessage;
+                let returnedMessage;
 
                 returnedMessage = [ protoSign.build("SignatureResponse").decode(e.data), aggP];
                 resolve(returnedMessage);
@@ -153,7 +153,7 @@ function websocket_sign(portNumber, file) {
  * @param g
  */
 function runGenerator(g) {
-    var it = g(), ret;
+    let it = g(), ret;
     (function iterate(val) {
         ret = it.next(val);
 

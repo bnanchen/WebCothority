@@ -8,12 +8,12 @@
 function saveToFile(fileToSign, filename, message) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = new Uint8Array(message[0].signature.toArrayBuffer());
-        var hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
+        const signature = new Uint8Array(message[0].signature.toArrayBuffer());
+        const hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
 
-        var signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
-        var aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, message[1]));
-        var hashBase64 = btoa(String.fromCharCode.apply(null, hash));
+        const signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
+        const aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, message[1]));
+        const hashBase64 = btoa(String.fromCharCode.apply(null, hash));
 
         // if the download button doesn't exist: create it
         if ($("#download_button").length == 0) {
@@ -34,24 +34,24 @@ function saveToFile(fileToSign, filename, message) {
  * @param signatureToVerify
  */
 function verifySignature(fileToVerify, signatureToVerify) {
-    var objectJSON = getJSONFileInObject(signatureToVerify);
-    var hash_verification = false;
-    var signature_verification = false;
+    const objectJSON = getJSONFileInObject(signatureToVerify);
+    let hash_verification = false;
+    let signature_verification = false;
 
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        var signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
-        var aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
-        var hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
+        const signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
+        const aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
+        const hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
-        var hashJSON = fromBase64toUint8Array(objectJSON.hash);
+        const hashJSON = fromBase64toUint8Array(objectJSON.hash);
         if (isEqualTo(hash, hashJSON)) {
             hash_verification = true;
         }
 
         // Verification of the signature with the hash and the aggregate public key:
-        var verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
+        const verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
         if (verification) {
             signature_verification = true;
         }
@@ -94,12 +94,12 @@ function verifySignature(fileToVerify, signatureToVerify) {
  */
 function downloadJSONFile(filename, signature, aggregateKey, hash) {
     // today date in format: mm/dd/yyyy
-    var currentTime = new Date();
-    var day = currentTime.getDay();
-    var month = currentTime.getMonth()+1; // January is number 0
-    var year = currentTime.getFullYear();
+    const currentTime = new Date();
+    const day = currentTime.getDay();
+    const month = currentTime.getMonth()+1; // January is number 0
+    const year = currentTime.getFullYear();
 
-    var jsonFile = {
+    const jsonFile = {
         filename: filename,
         date: day +"/"+ month +"/"+ year,
         signature: signature,
@@ -107,13 +107,13 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
         hash: hash
     };
 
-    var blob = new Blob([JSON.stringify(jsonFile, null, 5)], {type: 'application/json'});
+    const blob = new Blob([JSON.stringify(jsonFile, null, 5)], {type: 'application/json'});
 
     if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
     }
     else {
-        var elem = window.document.createElement('a');
+        const elem = window.document.createElement('a');
         elem.href = window.URL.createObjectURL(blob);
         elem.download = "signature_of_" + filename;
         document.body.appendChild(elem);

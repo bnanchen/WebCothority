@@ -5,11 +5,11 @@
  * @param asArrayBuffer true if we want to read the file as an ArrayBuffer, otherwise read as a String
  */
 function takeCareOf(file, asArrayBuffer) {
-    var reader = new FileReader();
+    const reader = new FileReader();
 
     function loadFile() {
         // usage of a Promise:
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             reader.onload = function(event) {
                 resolve(event.target.result);
             };
@@ -30,11 +30,12 @@ function takeCareOf(file, asArrayBuffer) {
  * update the progress bar when there is the upload of a file
  *
  * @param evt progress event
+ * @param progressBar
  */
 function updateProgress(evt, progressBar) {
     // evt is an ProgressEvent.
     if (evt.lengthComputable) {
-        var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+        const percentLoaded = Math.round((evt.loaded / evt.total) * 100);
         // Increase the progress bar length.
         if (percentLoaded < 100) {
             progressBar.style.width = percentLoaded + '%';
@@ -49,10 +50,10 @@ function updateProgress(evt, progressBar) {
  * @param fullPathName full path of the file
  */
 function getFilename(fullPathName) {
-    var charBackslachNumber = 0;
-    var charPointNumber = 0;
+    let charBackslachNumber = 0;
+    let charPointNumber = fullPathName.length;
 
-    for (i = 0; i < fullPathName.length; i++) {
+    for (let i = 0; i < fullPathName.length; i++) {
         // take off all characters before the last '\' (included itself)
         if (fullPathName[i] == "\\") {
             charBackslachNumber = i;
@@ -73,9 +74,9 @@ function getFilename(fullPathName) {
  * @param file
  */
 function getFileExtension(file) {
-    var charPointNumber = 0;
+    let charPointNumber = 0;
 
-    for (i = 0; i < file.length; i++) {
+    for (let i = 0; i < file.length; i++) {
         // take off all characters before the last '.'
         if (file[i] == '.') {
             charPointNumber = i;
@@ -92,6 +93,5 @@ function getFileExtension(file) {
  * @returns {*}
  */
 function getJSONFileInObject(text) {
-    var object = JSON.parse(text);
-    return object;
+    return JSON.parse(text);
 }

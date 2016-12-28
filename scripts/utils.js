@@ -2,14 +2,15 @@
  * File with useful methods for the project.
  */
 
-/**		  /**
+/**
  * converts hexadecimal to bytes in returning a blob
+ *
  * @return Blob
  */
 function hexToBytes(hex) {
     // conversion to a binary array:
-    var byteArray = new Uint8Array(hex.length / 2);
-    for (var i = 0; i < byteArray.length; i++) {
+    const byteArray = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < byteArray.length; i++) {
         // conversion du string en bits avec parseInt:
         byteArray[i] = parseInt(hex.substr(i * 2, 2), 16);
     }
@@ -19,13 +20,14 @@ function hexToBytes(hex) {
 
 /**
  * converts bytes to hexadecimal
+ *
  * @return Uint8Array
  */
 function bytesToHex(byteArray) {
     // conversion to a binary b:
-    var ua = new Uint8Array(byteArray);
-    var h = '0x';
-    for (var i = 0; i < ua.length; i++) {
+    const ua = new Uint8Array(byteArray);
+    let h = '0x';
+    for (let i = 0; i < ua.length; i++) {
         h += ("0"+ ua[i].toString(16)).slice(-2)+ " ";
     }
     return h;
@@ -42,7 +44,7 @@ function isEqualTo(first, second) {
     if (first.length != second.length) {
         return false;
     } else {
-        for (var i = 0; i < first.length; i++) {
+        for (let i = 0; i < first.length; i++) {
             if (first[i] != second[i]) {
                 return false;
             }
