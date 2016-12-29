@@ -153,9 +153,9 @@ function websocket_sign(portNumber, file) {
  * @param g
  */
 function runGenerator(g) {
-    let it = g();
+    let iterator = g();
     (function iterate(message) {
-        let ret = it.next(message);
+        let ret = iterator.next(message);
 
         if (!ret.done) {
             ret.value.then(iterate);
