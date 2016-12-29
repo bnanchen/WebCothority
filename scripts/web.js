@@ -99,7 +99,7 @@ function websocket_sign(portNumber, file) {
         const signMsgProto = protoSign.build("SignatureRequest");
         const rosterProto = protoSign.build("Roster");
         const siProto = protoSign.build("ServerIdentity");
-        nacl_factory.instantiate(function(nacl) {
+        nacl_factory.instantiate(function (nacl) {
             // Create a list of ServerIdentities for the roster.
             let agg = [];
             const list = listNodes.map(function(node, index){
@@ -153,9 +153,9 @@ function websocket_sign(portNumber, file) {
  * @param g
  */
 function runGenerator(g) {
-    let it = g(), ret;
-    (function iterate(val) {
-        ret = it.next(val);
+    let it = g();
+    (function iterate(message) {
+        let ret = it.next(message);
 
         if (!ret.done) {
             ret.value.then(iterate);
