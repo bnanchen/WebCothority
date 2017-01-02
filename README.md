@@ -1,1 +1,1 @@
-# Web-frontend for cothority
+# Web-frontend for the Cothority Project
