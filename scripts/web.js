@@ -3,7 +3,7 @@
  */
 function websocket_status(portNumber) {
     const ProtoBuf = dcodeIO.ProtoBuf;
-    const status = ProtoBuf.loadProto(`
+    const protoStatus = ProtoBuf.loadProto(`
 				message ServerIdentity{
     				required bytes public = 1;
     				required bytes id = 2;
@@ -30,7 +30,7 @@ function websocket_status(portNumber) {
     }
     // when the socket is opened (reaction):
     socket.onopen = function () {
-        const requestProto = status.build("Request");
+        const requestProto = protoStatus.build("Request");
         const request = new requestProto({});
         const requestHex = request.encode().toHex(); // finish doesn't exist
         const bytes = hexToBytes(requestHex);
@@ -42,7 +42,7 @@ function websocket_status(portNumber) {
         return new Promise(function (resolve, reject) {
             socket.onmessage = function(e) {
                 let returnedMessage;
-                returnedMessage = status.build("Response").decode(e.data);
+                returnedMessage = protoStatus.build("Response").decode(e.data);
 
                 resolve(returnedMessage);
             };
