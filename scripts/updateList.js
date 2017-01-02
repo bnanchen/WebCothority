@@ -50,5 +50,6 @@ function nodeCreation(message) {
         message.system.map.Status.value.field.map.Version.value,
         message.server
     );
+
     return currentNode;
 }

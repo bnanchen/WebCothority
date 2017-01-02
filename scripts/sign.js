@@ -1,15 +1,15 @@
 /**
  * Process the information to allow the user to download the signature JSON file
  *
- * @param fileToSign
+ * @param fileSigned
  * @param filename
  * @param message
  */
-function saveToFile(fileToSign, filename, message) {
+function saveToFile(fileSigned, filename, message) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
         const signature = new Uint8Array(message[0].signature.toArrayBuffer());
-        const hash = nacl.crypto_hash_sha256(bytesToHex(fileToSign)); // typeof: Uint8Array
+        const hash = nacl.crypto_hash_sha256(bytesToHex(fileSigned)); // typeof: Uint8Array
 
         const signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
         const aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, message[1]));
@@ -35,8 +35,8 @@ function saveToFile(fileToSign, filename, message) {
  */
 function verifySignature(fileToVerify, signatureToVerify) {
     const objectJSON = getJSONFileInObject(signatureToVerify);
-    let hash_verification = false;
-    let signature_verification = false;
+    let hashVerification = false;
+    let signatureVerification = false;
 
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
@@ -47,13 +47,13 @@ function verifySignature(fileToVerify, signatureToVerify) {
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
         const hashJSON = fromBase64toUint8Array(objectJSON.hash);
         if (isEqualTo(hash, hashJSON)) {
-            hash_verification = true;
+            hashVerification = true;
         }
 
         // Verification of the signature with the hash and the aggregate public key:
         const verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
         if (verification) {
-            signature_verification = true;
+            signatureVerification = true;
         }
 
         // If the progress bar already exists, remove it.
@@ -69,13 +69,13 @@ function verifySignature(fileToVerify, signatureToVerify) {
         $("#verification_result_modal").modal('show');
 
         // Update of the progress bars
-        if (hash_verification) {
+        if (hashVerification) {
             $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
         } else {
             $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
         }
 
-        if (signature_verification) {
+        if (signatureVerification) {
             $("#verify_signature_progress").append("<div id='signature_progress_bar' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
         } else {
             $("#verify_signature_progress").append("<div id='signature_progress_bar' class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
@@ -103,7 +103,7 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
         filename: filename,
         date: day +"/"+ month +"/"+ year,
         signature: signature,
-        'aggregate key': aggregateKey,
+        'aggregate-key': aggregateKey,
         hash: hash
     };
 
