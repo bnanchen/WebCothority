@@ -102,7 +102,7 @@ function websocket_sign(portNumber, file) {
         nacl_factory.instantiate(function (nacl) {
             // Create a list of ServerIdentities for the roster.
             let agg = [];
-            const list = listNodes.map(function(node, index){
+            const list = window.listNodes.map(function(node, index){
                 const s = node.server;
                 const pub = new Uint8Array(s.public.toArrayBuffer());
                 const pubNeg = [gf(), gf(), gf(), gf()];

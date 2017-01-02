@@ -3,14 +3,14 @@
  */
 function updateList() {
     runGenerator(function* generator() {
-        listNodes = [];
+        window.listNodes = [];
         let message = yield websocket_status(7003);
-        listNodes.push(nodeCreation(message));
+        window.listNodes.push(nodeCreation(message));
         message = yield websocket_status(7005);
-        listNodes.push(nodeCreation(message));
+        window.listNodes.push(nodeCreation(message));
         message = yield  websocket_status(7007);
-        listNodes.push(nodeCreation(message));
-        update(listNodes);
+        window.listNodes.push(nodeCreation(message));
+        update(window.listNodes);
     });
 }
 
@@ -21,7 +21,7 @@ function updateList() {
  * @returns {node}
  */
 function nodeCreation(message) {
-    // must put the constructor inside runGenerator(g) because overshadowing
+    // must put the constructor inside runGenerator(g) because of overshadowing
     function node(available_services, connType, description, host, port, rx_bytes,
                   system, tx_bytes, uptime, version, server) {
         this.available_services = available_services;
