@@ -115,13 +115,17 @@ function displayPrettyDate(dateToParse) {
     let date = seconds +"."+ milliseconds;
     if (minutes != "") {
         date = minutes +":"+ date;
-    } else if (hours != "") {
+    }
+    if (hours != "") {
         date = hours +":"+ date;
-    } else if (days != "") {
+    }
+    if (days != "") {
         date = days +"d. "+ date;
-    } else if (months != "") {
+    }
+    if (months != "") {
         date = months +"m. "+ date;
-    } else if (years != "") {
+    }
+    if (years != "") {
         date = years +"y. " + date;
     }
 
