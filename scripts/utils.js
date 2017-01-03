@@ -112,8 +112,12 @@ function displayPrettyDate(dateToParse) {
         }
     }
 
-    let date = hours +":"+ minutes +":"+ seconds +"."+ milliseconds;
-    if (days != "") {
+    let date = seconds +"."+ milliseconds;
+    if (minutes != "") {
+        date = minutes +":"+ date;
+    } else if (hours != "") {
+        date = hours +":"+ date;
+    } else if (days != "") {
         date = days +"d. "+ date;
     } else if (months != "") {
         date = months +"m. "+ date;
