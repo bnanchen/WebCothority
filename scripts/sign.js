@@ -16,7 +16,7 @@ function saveToFile(fileSigned, filename, message) {
         const hashBase64 = btoa(String.fromCharCode.apply(null, hash));
 
         // if the download button doesn't exist: create it
-        if ($("#download_button").length == 0) {
+        if ($("#download_button").length === 0) {
             $("#add_download_button").append("<button class='btn btn-primary' type='button' id='download_button'>" + "Download the Signature" + "</button>");
         }
 

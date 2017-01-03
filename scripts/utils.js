@@ -63,4 +63,11 @@ function fromBase64toUint8Array(base64) {
     return new Uint8Array(atob(base64).split("").map(function(c) {
         return c.charCodeAt(0); }));
 }
+/*
+function displayPrettyDate(date) {
+    let buffer;
+    for (let i = 0; i < date.length; i++) {
+        if (typeof date[i] === )
+    }
+}*/
 

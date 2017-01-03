@@ -16,7 +16,7 @@ function takeCareOf(file, asArrayBuffer) {
         });
     }
 
-    if (asArrayBuffer == true) {
+    if (asArrayBuffer === true) {
         reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
     } else {
         reader.readAsText(file); // trigger the onload (asynchrone)
@@ -55,12 +55,12 @@ function getFilename(fullPathName) {
 
     for (let i = 0; i < fullPathName.length; i++) {
         // take off all characters before the last '\' (included itself)
-        if (fullPathName[i] == "\\") {
+        if (fullPathName[i] === "\\") {
             charBackslachNumber = i;
         }
 
         // take off all characters after the last '.'
-        if (fullPathName[i] == '.') {
+        if (fullPathName[i] === '.') {
             charPointNumber = i;
         }
     }
@@ -78,7 +78,7 @@ function getFileExtension(file) {
 
     for (let i = 0; i < file.length; i++) {
         // take off all characters before the last '.'
-        if (file[i] == '.') {
+        if (file[i] === '.') {
             charPointNumber = i;
         }
     }

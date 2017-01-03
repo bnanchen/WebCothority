@@ -14,14 +14,14 @@ const protoFile = ProtoBuf.loadProto(`
     message Request {
     }
         
-	    message Response {
-    		map<string, Status> system = 1;
-    		optional ServerIdentity server = 2;
+	message Response {
+        map<string, Status> system = 1;
+    	optional ServerIdentity server = 2;
 
-		    message Status {
-        		map<string, string> field = 1;
-    		}
-		}
+		message Status {
+            map<string, string> field = 1;
+    	}
+	}
         
     message Roster {
         optional bytes id = 1;
@@ -104,7 +104,7 @@ function websocket_sign(portNumber, file) {
                 pack(pubPosArr, pubNeg);
                 const pubPos = [gf(), gf(), gf(), gf()]; // zero-point
                 unpackneg(pubPos, pubPosArr);
-                if (index == 0) {
+                if (index === 0) {
                     agg = pubPos;
                 } else {
                     // add pubPos to agg, storing result in agg
