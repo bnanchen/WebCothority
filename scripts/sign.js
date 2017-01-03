@@ -41,7 +41,7 @@ function verifySignature(fileToVerify, signatureToVerify) {
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
         const signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
-        const aggregate = fromBase64toUint8Array(objectJSON["aggregate key"]);
+        const aggregate = fromBase64toUint8Array(objectJSON["aggregate-key"]);
         const hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
