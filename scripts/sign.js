@@ -17,7 +17,8 @@ function saveToFile(fileSigned, filename, message) {
 
         // if the download button doesn't exist: create it
         if ($("#download_button").length === 0) {
-            $("#add_download_button").append("<button class='btn btn-primary' type='button' id='download_button'>" + "Download the Signature" + "</button>");
+            $("#add_download_button").append("<button class='btn btn-primary' type='button' id='download_button'>"
+                + "Download the Signature" + "</button>");
         }
 
         // download the JSON file in clicking on the download_button
@@ -70,15 +71,23 @@ function verifySignature(fileToVerify, signatureToVerify) {
 
         // Update of the progress bars
         if (hashVerification) {
-            $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
+            $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-success' " +
+                "role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"
+                + "Valid!" +"</div>");
         } else {
-            $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
+            $("#verify_hash_progress").append("<div id='hash_progress_bar' class='progress-bar progress-bar-danger' " +
+                "role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"
+                + "Not valid!" +"</div>");
         }
 
         if (signatureVerification) {
-            $("#verify_signature_progress").append("<div id='signature_progress_bar' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
+            $("#verify_signature_progress").append("<div id='signature_progress_bar' " +
+                "class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' " +
+                "aria-valuemax='100' style='width: 100%'>"+ "Valid!" +"</div>");
         } else {
-            $("#verify_signature_progress").append("<div id='signature_progress_bar' class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
+            $("#verify_signature_progress").append("<div id='signature_progress_bar' " +
+                "class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' " +
+                "aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
         }
 
     });
