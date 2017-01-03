@@ -24,7 +24,7 @@ function updateTable(listNodes) {
         table.append("<tr><td>"+ node.description +"</td>" +
             "<td>"+ node.connType +"</td>" +
             "<td>"+ node.port +"</td><" +
-            "td>"+ node.uptime +"</td>" +
+            "td>"+ displayPrettyDate(node.uptime) +"</td>" +
             "<td>"+ (parseInt(node.rx_bytes) + parseInt(node.tx_bytes)) +"</td>" +
             "<td>" + helperNumberOfServices(node) + "</td>" +
             "<td>"+ node.version +"</td></tr>");

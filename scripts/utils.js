@@ -63,11 +63,64 @@ function fromBase64toUint8Array(base64) {
     return new Uint8Array(atob(base64).split("").map(function(c) {
         return c.charCodeAt(0); }));
 }
-/*
-function displayPrettyDate(date) {
-    let buffer;
-    for (let i = 0; i < date.length; i++) {
-        if (typeof date[i] === )
+
+/**
+ * Transform in a 'pretty' string the uptime of a server
+ *
+ * @param dateToParse string representing the uptime of a server
+ * @returns {string}  'pretty' string
+ */
+function displayPrettyDate(dateToParse) {
+    const listNumbers = ["0","1","2","3","4","5","6","7","8","9"];
+    let buffer = "";
+    let years = "";
+    let months = "";
+    let days = "";
+    let hours = "";
+    let minutes = "";
+    let seconds = "";
+    let milliseconds = "";
+
+    for (let i = 0; i < dateToParse.length; i++) {
+        if (listNumbers.indexOf(dateToParse[i]) != -1) {
+            buffer = buffer.concat(dateToParse[i]);
+        } else {
+            if (dateToParse[i] === ".") {
+                seconds = buffer;
+                if (seconds.length == 1) {
+                    seconds = "0" + seconds;
+                }
+            } else if (dateToParse[i] === "s") {
+                milliseconds = buffer.slice(0,2);
+            }
+            else if (dateToParse[i] === "m") {
+                minutes = buffer;
+                if (minutes.length == 1) {
+                    minutes = "0" + minutes;
+                }
+            } else if (dateToParse[i] === "h") {
+                hours = buffer;
+            } else if (dateToParse[i] === "d") {
+                days = buffer;
+                // TODO ask for the good format for month
+            } else if (dateToParse[i] === "month") {
+                months = buffer;
+            } else if (dateToParse[i] === "y") {
+                years = buffer;
+            }
+            buffer = "";
+        }
     }
-}*/
+
+    let date = hours +":"+ minutes +":"+ seconds +"."+ milliseconds;
+    if (days != "") {
+        date = days +"d. "+ date;
+    } else if (months != "") {
+        date = months +"m. "+ date;
+    } else if (years != "") {
+        date = years +"y. " + date;
+    }
+
+    return date;
+}
 
