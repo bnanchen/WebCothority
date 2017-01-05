@@ -124,7 +124,7 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
     else {
         const elem = window.document.createElement('a');
         elem.href = window.URL.createObjectURL(blob);
-        elem.download = "signature_of_" + filename;
+        elem.download = "signature_of_" + filename +".json";
         document.body.appendChild(elem);
         elem.click();
         document.body.removeChild(elem);
