@@ -44,6 +44,9 @@ function verifySignature(fileToVerify, signatureToVerify) {
         const signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
         const aggregate = fromBase64toUint8Array(objectJSON["aggregate-key"]);
         const hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
+        console.log(objectJSON["aggregate-key"].length);
+        console.log(objectJSON.signature.length);
+        console.log(objectJSON.hash.length);
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
         const hashJSON = fromBase64toUint8Array(objectJSON.hash);
