@@ -97,7 +97,7 @@ function websocket_sign(portNumber, file) {
             const listServers = window.listNodes.map(function(node, index) {
                 const server = node.server;
                 const pub = new Uint8Array(server.public.toArrayBuffer()); // public key of a server
-                // multiply the x-axis of point with -1, because TweetNaCl.js doesn’t have unpack, only unpackneg.
+                // multiply the x-axis of point with -1, because TweetNaCl.js doesn’t have unpack, only unpackneg
                 pub[31] ^= 128;
                 // the point is represented as a 2-dimensional array
                 const pubPos = [gf(), gf(), gf(), gf()]; // zero-point
