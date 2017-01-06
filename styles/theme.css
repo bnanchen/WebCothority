@@ -1,3 +1,5 @@
+/* File containing all design choice of the website not using Bootstrap framework */
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
