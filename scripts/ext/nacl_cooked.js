@@ -114,7 +114,7 @@ var nacl_factory = {
                 function injectBytes(bs, leftPadding) {
                     var p = leftPadding || 0;
                     var address = MALLOC(bs.length + p);
-                    nacl_raw.HEAPU8.set(bs, address + p);
+                    nacl_raw.HEAPU8.set(Object(bs), address + p);
                     for (var i = address; i < address + p; i++) {
                         nacl_raw.HEAPU8[i] = 0;
                     }
