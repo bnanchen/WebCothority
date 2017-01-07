@@ -29,9 +29,9 @@ function nodeCreation(message) {
         this.description = description;
         this.host = host;
         this.port = port;
-        this.rx_bytes = rx_bytes; // reception
+        this.rx_bytes = rx_bytes; // received
         this.system = system;
-        this.tx_bytes = tx_bytes; // envoi
+        this.tx_bytes = tx_bytes; // sent
         this.uptime = uptime;
         this.version = version;
         this.server = server;
