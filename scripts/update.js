@@ -1,5 +1,5 @@
 /**
- * fonction de mise à jour des données de la page
+ * Update the Status part of the website
  */
 function update(listNodes) {
     let numberBandwidth = 0;
@@ -12,7 +12,7 @@ function update(listNodes) {
 }
 
 /**
- * fonction de mise à jour du tableau
+ * Update the Status Table
  */
 function updateTable(listNodes) {
     //updateTable
