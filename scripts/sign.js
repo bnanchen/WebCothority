@@ -1,9 +1,9 @@
 /**
  * Process the information to allow the user to download the signature JSON file
  *
- * @param fileSigned
- * @param filename
- * @param message
+ * @param fileSigned  signed file as an ArrayBuffer
+ * @param filename    name of the signed file
+ * @param message     array containing the file's signature and the aggregate-key
  */
 function saveToFile(fileSigned, filename, message) {
     // instantiate the nacl module:
@@ -31,11 +31,11 @@ function saveToFile(fileSigned, filename, message) {
 /**
  * Verify the hash of the file and the signature and display the result to the user
  *
- * @param fileToVerify
- * @param signatureToVerify
+ * @param fileToVerify    file as an ArrayBuffer
+ * @param stringJSON      JSON file as a String
  */
-function verifySignature(fileToVerify, signatureToVerify) {
-    const objectJSON = getJSONFileInObject(signatureToVerify);
+function verifySignature(fileToVerify, stringJSON) {
+    const objectJSON = getJSONFileInObject(stringJSON);
     let hashVerification = false;
     let signatureVerification = false;
 
@@ -100,9 +100,9 @@ function verifySignature(fileToVerify, signatureToVerify) {
  * Let the user download the JSON signature file to his computer
  *
  * @param filename
- * @param signature
- * @param aggregateKey
- * @param hash
+ * @param signature      file's signature
+ * @param aggregateKey   aggregate-key
+ * @param hash           file's hash
  */
 function downloadJSONFile(filename, signature, aggregateKey, hash) {
     // today date in format: mm/dd/yyyy

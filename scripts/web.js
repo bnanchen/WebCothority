@@ -40,6 +40,12 @@ const protoFile = ProtoBuf.loadProto(`
     }
 `);
 
+/**
+ * Contact a conode and retrieve Status response
+ *
+ * @param portNumber port number of the conode to contact
+ * @returns {*}      status information inside a Promise object
+ */
 function websocket_status(portNumber) {
     const socket = new WebSocket("ws://localhost:" + portNumber + "/Status/Request");
     socket.binaryType = "arraybuffer";
@@ -74,10 +80,11 @@ function websocket_status(portNumber) {
 }
 
 /**
+ * Contact a conode to ask for a collective signature of a file
  *
- * @param portNumber
- * @param file        file as an ArrayBuffer
- * @returns {*}
+ * @param portNumber  port number of the conode to contact
+ * @param file        file to sign as an ArrayBuffer
+ * @returns {*}       Array containing signature of the file and the aggregate-key inside a Promise object
  */
 function websocket_sign(portNumber, file) {
     const socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
@@ -145,9 +152,9 @@ function websocket_sign(portNumber, file) {
 }
 
 /**
+ * util function to control the generator function's iterator
  *
- *
- * @param g
+ * @param g generator function
  */
 function runGenerator(g) {
     let iterator = g();
