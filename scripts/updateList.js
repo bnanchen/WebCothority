@@ -4,11 +4,18 @@
 function updateList() {
     runGenerator(function* generator() {
         window.listNodes = [];
+
         let message = yield websocket_status(7003);
         window.listNodes.push(nodeCreation(message));
         message = yield websocket_status(7005);
         window.listNodes.push(nodeCreation(message));
         message = yield  websocket_status(7007);
+        window.listNodes.push(nodeCreation(message));
+        message = yield  websocket_status(7009);
+        window.listNodes.push(nodeCreation(message));
+        message = yield  websocket_status(7011);
+        window.listNodes.push(nodeCreation(message));
+        message = yield  websocket_status(7013);
         window.listNodes.push(nodeCreation(message));
         update(window.listNodes);
     });
