@@ -19,7 +19,7 @@ $(document).ready(function () {
         const file = this;
         runGenerator(function* waitingfile() {
             const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
-            const message = yield websocket_sign(7003, fileAsArrayBuffer);
+            const message = yield websocket_sign("localhost:7003", fileAsArrayBuffer);
 
             saveToFile(fileAsArrayBuffer, getFilename(file.value), message);
         });

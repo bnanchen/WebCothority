@@ -3,20 +3,15 @@
  */
 function updateList() {
     runGenerator(function* generator() {
-        window.listNodes = [];
+        const listAddresses = ["localhost:7003", "localhost:7005", "localhost:7007",
+            "localhost:7009", "localhost:7011", "localhost:7013"];
 
-        let message = yield websocket_status(7003);
-        window.listNodes.push(nodeCreation(message));
-        message = yield websocket_status(7005);
-        window.listNodes.push(nodeCreation(message));
-        message = yield  websocket_status(7007);
-        window.listNodes.push(nodeCreation(message));
-        message = yield  websocket_status(7009);
-        window.listNodes.push(nodeCreation(message));
-        message = yield  websocket_status(7011);
-        window.listNodes.push(nodeCreation(message));
-        message = yield  websocket_status(7013);
-        window.listNodes.push(nodeCreation(message));
+        window.listNodes = [];
+        for (let address of listAddresses) {
+            let message = yield websocket_status(address);
+            window.listNodes.push(nodeCreation(message));
+        }
+
         update(window.listNodes);
     });
 }

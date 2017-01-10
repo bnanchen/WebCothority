@@ -46,8 +46,8 @@ const protoFile = ProtoBuf.loadProto(`
  * @param portNumber port number of the conode to contact
  * @returns {*}      status information inside a Promise object
  */
-function websocket_status(portNumber) {
-    const socket = new WebSocket("ws://localhost:" + portNumber + "/Status/Request");
+function websocket_status(address) {
+    const socket = new WebSocket("ws://"+ address + "/Status/Request");
     socket.binaryType = "arraybuffer";
     if (socket.readyState != 0 && socket.readyState != 1) {
         console.log("The opening of the WebSocket doesn't go well. Ready State constant:"+ socket.readyState);
@@ -86,8 +86,8 @@ function websocket_status(portNumber) {
  * @param file        file to sign as an ArrayBuffer
  * @returns {*}       Array containing signature of the file and the aggregate-key inside a Promise object
  */
-function websocket_sign(portNumber, file) {
-    const socket = new WebSocket("ws://localhost:" + portNumber + "/CoSi/SignatureRequest");
+function websocket_sign(address, file) {
+    const socket = new WebSocket("ws://"+ address + "/CoSi/SignatureRequest");
     const aggKey = new Uint8Array(32);
     socket.binaryType = "arraybuffer";
     if (socket.readyState != 0 && socket.readyState != 1) {
