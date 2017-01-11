@@ -25,25 +25,6 @@ function takeCareOf(file, asArrayBuffer) {
     return loadFile();
 }
 
-
-/**
- * update the progress bar when there is the upload of a file
- *
- * @param evt progress event
- * @param progressBar
- */
-function updateProgress(evt, progressBar) {
-    // evt is an ProgressEvent.
-    if (evt.lengthComputable) {
-        const percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-        // Increase the progress bar length.
-        if (percentLoaded < 100) {
-            progressBar.style.width = percentLoaded + '%';
-            progressBar.textContent = percentLoaded + '%';
-        }
-    }
-}
-
 /**
  * Isolate the filename from the full path of the file
  *

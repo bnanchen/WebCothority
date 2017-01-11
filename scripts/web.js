@@ -134,10 +134,13 @@ function websocket_sign(address, file) {
             });
         } catch(err) {
             // warning alert appears if the file is too big (for the TweetNaCl.js library heap)
-            $("#file_size_alert").append("<div class='alert alert-danger alert-dismissible fade in'>"
-                +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                +"</a><strong>"+ "Warning! " +"</strong>"+ "The file submitted is too big!"
-                +"</div>");
+            if ($("#file_size_alert_window").length === 0) {
+                $("#file_size_alert").append("<div class='alert alert-danger alert-dismissible fade in'" +
+                    "id='file_size_alert_window'>"
+                    +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                    +"</a><strong>"+ "Warning! " +"</strong>"+ "The file submitted is too big!"
+                    +"</div>");
+            }
             return;
 
         }

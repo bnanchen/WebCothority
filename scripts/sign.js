@@ -38,26 +38,47 @@ function verifySignature(fileToVerify, stringJSON) {
     const objectJSON = getJSONFileInObject(stringJSON);
     let hashVerification = false;
     let signatureVerification = false;
+    let signature;
+    let aggregate;
 
     // instantiate the nacl module:
     nacl_factory.instantiate(function (nacl) {
-        const signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
-        const aggregate = fromBase64toUint8Array(objectJSON["aggregate-key"]);
+        try {
+            signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
+        } catch(err) {
+            // error if the signature is not a correct length for a base64 version
+            signature = new Uint8Array(0);
+        }
+
+        try {
+            aggregate = fromBase64toUint8Array(objectJSON["aggregate-key"]);
+        } catch(err) {
+            // error if the aggregate-key is not a correct length for a base64 version
+            aggregate = new Uint8Array(0);
+        }
+
         const hash = nacl.crypto_hash_sha256(bytesToHex(fileToVerify)); // Uint8Array
-        console.log(objectJSON["aggregate-key"].length);
-        console.log(objectJSON.signature.length);
-        console.log(objectJSON.hash.length);
 
         // Verification if the hash of the fileToVerify is the same as the hash of the file inside the JSON file:
-        const hashJSON = fromBase64toUint8Array(objectJSON.hash);
-        if (isEqualTo(hash, hashJSON)) {
-            hashVerification = true;
+        if (hash.length !== 0) {
+            let hashJSON;
+            try {
+                hashJSON = fromBase64toUint8Array(objectJSON.hash);
+            } catch(err) {
+                // error if the hash is not a correct length for a base64 version
+                hashJSON = new Uint8Array(0);
+            }
+            if (isEqualTo(hash, hashJSON)) {
+                hashVerification = true;
+            }
         }
 
         // Verification of the signature with the hash and the aggregate public key:
-        const verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
-        if (verification) {
-            signatureVerification = true;
+        if (signature.length !== 0 && hash.length !== 0 && aggregate.length !== 0) {
+            const verification = nacl.crypto_sign_verify_detached(signature, hash, aggregate);
+            if (verification) {
+                signatureVerification = true;
+            }
         }
 
         // If the progress bar already exists, remove it.
@@ -92,7 +113,6 @@ function verifySignature(fileToVerify, stringJSON) {
                 "class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='100' aria-valuemin='0' " +
                 "aria-valuemax='100' style='width: 100%'>"+ "Not valid!" +"</div>");
         }
-
     });
 }
 

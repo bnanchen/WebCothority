@@ -38,11 +38,16 @@ $(document).ready(function () {
             $("#button_verify_signature").unbind('click').click(function() {
                 // Verify that the number of files is 2:
                 if (file.files.length != 2) {
-                    // warning alert appears:
-                    $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'>"
-                        +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                        +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload two files."
-                        +"</div>");
+                    if ($("#verification_alert_two_files_window").length === 0) {
+                        // warning alert appears:
+                        $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
+                            "id='verification_alert_two_files_window'>"
+                            +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                            +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload two files."
+                            +"</div>");
+                    }
+                } else if ($("#verification_alert").length !== 0) {
+                    $("#verification_alert").empty();
                 }
             });
 
@@ -55,12 +60,17 @@ $(document).ready(function () {
 
                     // Verify that one of the two files has .json extension:
                     if (nameFile != "json") {
-                        // warning alert appears:
-                        $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'>"
-                            +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                            +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
-                            +"</div>");
+                        if ($("#verification_alert_window").length === 0) {
+                            // warning alert appears:
+                            $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
+                                "id='verification_alert_window'>"
+                                +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                                +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
+                                +"</div>");
+                        }
                         return;
+                    } else if ($("#verification_alert").length !== 0) {
+                        $("#verification_alert").empty();
                     }
 
                     verifySignature(fileAsArrayBuffer,signatureAsString);
@@ -79,11 +89,16 @@ $(document).ready(function () {
             $("#button_verify_signature").unbind('click').click(function() {
                 // Verify that the number of files is 2:
                 if (file.files.length != 2) {
-                    // warning alert appears:
-                    $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'>"
-                        +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                        +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload two files."
-                        +"</div>");
+                    if ($("#verification_alert_two_files_window").length === 0) {
+                        // warning alert appears:
+                        $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
+                            "id='verification_alert_two_files_window'>"
+                            +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                            +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload two files."
+                            +"</div>");
+                    }
+                } else if ($("#verification_alert").length !== 0) {
+                    $("#verification_alert").empty();
                 }
             });
 
@@ -95,12 +110,17 @@ $(document).ready(function () {
 
                     // Verify that one of the two files has .json extension:
                     if (nameFile != "json") {
-                        // warning alert appears:
-                        $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'>"
-                            +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                            +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
-                            +"</div>");
+                        if ($("#verification_alert_window").length === 0) {
+                            // warning alert appears:
+                            $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
+                                "id='verification_alert_window'>"
+                                +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                                +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
+                                +"</div>");
+                        }
                         return;
+                    } else if ($("#verification_alert").length !== 0) {
+                        $("#verification_alert").empty();
                     }
 
                     verifySignature(fileAsArrayBuffer, signatureAsString);
