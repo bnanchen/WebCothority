@@ -102,8 +102,7 @@ function displayPrettyDate(dateToParse) {
                 hours = buffer;
             } else if (dateToParse[i] === "d") {
                 days = buffer;
-                // TODO ask for the good format for month
-            } else if (dateToParse[i] === "month") {
+            } else if (dateToParse[i] === "mo") {
                 months = buffer;
             } else if (dateToParse[i] === "y") {
                 years = buffer;
