@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+
     /**
      * Status part
      */
@@ -17,7 +18,7 @@ $(document).ready(function () {
      */
     $("#signature_fileInput").change(function() {
         const file = this;
-        runGenerator(function* waitingfile() {
+        runGenerator(function* waitingFile() {
             const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
             const message = yield websocketSign("localhost:7003", fileAsArrayBuffer);
 
@@ -32,13 +33,13 @@ $(document).ready(function () {
     $("#verify_file_fileInput").change(function() {
         const file = this;
 
-        runGenerator(function* waitingfile() {
+        runGenerator(function* waitingFile() {
             const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
 
             $("#verify_signature_fileInput").change(function() {
                 const file = this;
 
-                runGenerator(function* waitingfile() {
+                runGenerator(function* waitingFile() {
                     const signatureAsString = yield takeCareOf(file.files[0], false);
                     const filename = getFileExtension(file.files[0].name);
 
@@ -57,14 +58,14 @@ $(document).ready(function () {
     $("#verify_signature_fileInput").change(function() {
         const file = this;
 
-        runGenerator(function* waitingfile() {
+        runGenerator(function* waitingFile() {
             const signatureAsString = yield takeCareOf(file.files[0], false);
             const filename = getFileExtension(file.files[0].name);
 
             $("#verify_file_fileInput").change(function() {
                 const file = this;
 
-                runGenerator(function* waitingfile() {
+                runGenerator(function* waitingFile() {
                     const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
 
                     // Verify that the second file has .json extension, if not display a warning

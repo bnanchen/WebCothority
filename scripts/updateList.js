@@ -3,10 +3,11 @@
  */
 function updateList() {
     runGenerator(function* generator() {
+        // list of contacted conode's addresses
         const listAddresses = ["localhost:7003", "localhost:7005", "localhost:7007",
             "localhost:7009", "localhost:7011", "localhost:7013"];
-
         window.listNodes = [];
+
         for (let address of listAddresses) {
             let message = yield websocketStatus(address);
             window.listNodes.push(nodeCreation(message));
@@ -17,13 +18,13 @@ function updateList() {
 }
 
 /**
- * Create a node from the information received from the Cothority
+ * Create a node from the information received from a conode
  *
- * @param message status information received from the Cothority
- * @returns {node}
+ * @param message    status information received from a conode
+ * @returns {node}   an object node
  */
 function nodeCreation(message) {
-    // must put the constructor inside runGenerator(g) because of overshadowing
+    // Constructor of object node: must put it inside runGenerator(g) because of overshadowing
     function node(available_services, connType, description, host, port, rx_bytes,
                   system, tx_bytes, uptime, version, server) {
         this.available_services = available_services;
@@ -39,7 +40,7 @@ function nodeCreation(message) {
         this.server = server;
     }
 
-    const currentNode = new node(
+    return new node(
         message.system.map.Status.value.field.map.Available_Services.value,
         message.system.map.Status.value.field.map.ConnType.value,
         message.system.map.Status.value.field.map.Description.value,
@@ -52,6 +53,4 @@ function nodeCreation(message) {
         message.system.map.Status.value.field.map.Version.value,
         message.server
     );
-
-    return currentNode;
 }

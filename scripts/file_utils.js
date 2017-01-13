@@ -1,8 +1,9 @@
 /**
- * take care of the file if there is an upload
+ * take care of the file if a file is submitted
  *
- * @param file the file uploaded (Blob)
- * @param asArrayBuffer true if we want to read the file as an ArrayBuffer, otherwise read as a String
+ * @param file            the file submitted (Blob)
+ * @param asArrayBuffer   true if we want to read the file as an ArrayBuffer, otherwise read as a String
+ * @returns {*}           a Promise containing the read file
  */
 function takeCareOf(file, asArrayBuffer) {
     const reader = new FileReader();
@@ -17,9 +18,11 @@ function takeCareOf(file, asArrayBuffer) {
     }
 
     if (asArrayBuffer === true) {
-        reader.readAsArrayBuffer(file); // trigger the onload (asynchrone)
+        // trigger the onload (asynchrone)
+        reader.readAsArrayBuffer(file);
     } else {
-        reader.readAsText(file); // trigger the onload (asynchrone)
+        // trigger the onload (asynchrone)
+        reader.readAsText(file);
     }
 
     return loadFile();
@@ -28,9 +31,9 @@ function takeCareOf(file, asArrayBuffer) {
 /**
  * Process the information to allow the user to download the signature JSON file
  *
- * @param fileSigned  signed file as an ArrayBuffer
- * @param filename    name of the signed file
- * @param message     array containing the file's signature and the aggregate-key
+ * @param fileSigned   signed file as an ArrayBuffer
+ * @param filename     name of the signed file
+ * @param message      array containing the file's signature and the aggregate-key
  */
 function saveToFile(fileSigned, filename, message) {
     // instantiate the nacl module:
@@ -96,7 +99,8 @@ function downloadJSONFile(filename, signature, aggregateKey, hash) {
 /**
  * Isolate the filename from the full path of the file
  *
- * @param fullPathName full path of the file
+ * @param fullPathName   full path of the file
+ * @returns              the filename as a String
  */
 function getFilename(fullPathName) {
     let charBackslachNumber = 0;
@@ -121,6 +125,7 @@ function getFilename(fullPathName) {
  * Return the extension name of the file
  *
  * @param file
+ * @returns       the extension of the file as a String
  */
 function getFileExtension(file) {
     let charPointNumber = 0;
@@ -138,8 +143,8 @@ function getFileExtension(file) {
 /**
  * Read the signature JSON file as a text and return it as an object
  *
- * @param text
- * @returns {*}
+ * @param text    signature JSON file
+ * @returns {*}   JSON file as an object
  */
 function getJSONFileInObject(text) {
     return JSON.parse(text);

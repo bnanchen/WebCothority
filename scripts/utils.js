@@ -1,9 +1,9 @@
 /**
- * File with useful methods for the project.
+ * File with all kinds of useful methods for the project.
  */
 
 /**
- * converts hexadecimal to bytes in returning a blob
+ * converts hexadecimal to bytes
  *
  * @return Blob
  */
@@ -67,8 +67,8 @@ function fromBase64toUint8Array(base64) {
 /**
  * Transform in a 'pretty' string the uptime of a server
  *
- * @param dateToParse string representing the uptime of a server
- * @returns {string}  'pretty' string
+ * @param dateToParse     string representing the uptime of a server
+ * @returns {string}      'pretty' string
  */
 function displayPrettyDate(dateToParse) {
     const listNumbers = ["0","1","2","3","4","5","6","7","8","9"];

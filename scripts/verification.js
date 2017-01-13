@@ -16,14 +16,14 @@ function verifySignature(fileToVerify, stringJSON) {
         try {
             signature = fromBase64toUint8Array(objectJSON.signature).slice(0, 64);
         } catch(err) {
-            // error if the signature is not a correct length for a base64 version
+            // error catched if the signature is not a correct length for a base64 version
             signature = new Uint8Array(0);
         }
 
         try {
             aggregate = fromBase64toUint8Array(objectJSON["aggregate-key"]);
         } catch(err) {
-            // error if the aggregate-key is not a correct length for a base64 version
+            // error catched if the aggregate-key is not a correct length for a base64 version
             aggregate = new Uint8Array(0);
         }
 
@@ -35,7 +35,7 @@ function verifySignature(fileToVerify, stringJSON) {
             try {
                 hashJSON = fromBase64toUint8Array(objectJSON.hash);
             } catch(err) {
-                // error if the hash is not a correct length for a base64 version
+                // error catched if the hash is not a correct length for a base64 version
                 hashJSON = new Uint8Array(0);
             }
             if (isEqualTo(hash, hashJSON)) {

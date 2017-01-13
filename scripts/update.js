@@ -3,11 +3,15 @@
  */
 function update(listNodes) {
     let numberBandwidth = 0;
+
     $("#numberNodes").html(listNodes.length);
+
     for (let i = 0; i < listNodes.length; i++) {
         numberBandwidth += (parseInt(listNodes[i].rx_bytes) + parseInt(listNodes[i].tx_bytes));
     }
+
     $("#numberBandwidth").html(numberBandwidth);
+
     updateTable(listNodes);
 }
 
@@ -15,11 +19,13 @@ function update(listNodes) {
  * Update the Status Table
  */
 function updateTable(listNodes) {
-    //updateTable
+    // "clean" the table
     $("#status td").each(function() {
         this.remove();
     });
+
     const table = $("#status");
+
     $.each(listNodes, function(i, node) {
         table.append("<tr><td>"+ node.description +"</td>" +
             "<td>"+ node.connType +"</td>" +
@@ -32,6 +38,12 @@ function updateTable(listNodes) {
 
 }
 
+/**
+ * helper function
+ *
+ * @param node        node object
+ * @returns {Number}  number of available services of the node
+ */
 function helperNumberOfServices(node) {
     return String(node.available_services).split(',').length;
 }
