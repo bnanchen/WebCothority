@@ -35,42 +35,17 @@ $(document).ready(function () {
         runGenerator(function* waitingfile() {
             const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
 
-            $("#button_verify_signature").unbind('click').click(function() {
-                // Verify that the number of files is 2:
-                if (file.files.length != 2) {
-                    if ($("#verification_alert_two_files_window").length === 0) {
-                        // warning alert appears:
-                        $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
-                            "id='verification_alert_two_files_window'>"
-                            +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                            +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload two files."
-                            +"</div>");
-                    }
-                } else if ($("#verification_alert").length !== 0) {
-                    $("#verification_alert").empty();
-                }
-            });
-
             $("#verify_signature_fileInput").change(function() {
                 const file = this;
 
                 runGenerator(function* waitingfile() {
                     const signatureAsString = yield takeCareOf(file.files[0], false);
-                    const nameFile = getFileExtension(file.files[0].name);
+                    const filename = getFileExtension(file.files[0].name);
 
-                    // Verify that one of the two files has .json extension:
-                    if (nameFile != "json") {
-                        if ($("#verification_alert_window").length === 0) {
-                            // warning alert appears:
-                            $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
-                                "id='verification_alert_window'>"
-                                +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                                +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
-                                +"</div>");
-                        }
+                    // Verify that the second file has .json extension, if not display a warning
+                    if (warningNotJSON(filename) === true) {
+                        // abort the function
                         return;
-                    } else if ($("#verification_alert").length !== 0) {
-                        $("#verification_alert").empty();
                     }
 
                     verifySignature(fileAsArrayBuffer,signatureAsString);
@@ -84,23 +59,7 @@ $(document).ready(function () {
 
         runGenerator(function* waitingfile() {
             const signatureAsString = yield takeCareOf(file.files[0], false);
-            const nameFile = getFileExtension(file.files[0].name);
-
-            $("#button_verify_signature").unbind('click').click(function() {
-                // Verify that the number of files is 2:
-                if (file.files.length != 2) {
-                    if ($("#verification_alert_two_files_window").length === 0) {
-                        // warning alert appears:
-                        $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
-                            "id='verification_alert_two_files_window'>"
-                            +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                            +"</a> <strong>"+ "Warning! " +"</strong>"+ "You must upload two files."
-                            +"</div>");
-                    }
-                } else if ($("#verification_alert").length !== 0) {
-                    $("#verification_alert").empty();
-                }
-            });
+            const filename = getFileExtension(file.files[0].name);
 
             $("#verify_file_fileInput").change(function() {
                 const file = this;
@@ -108,19 +67,10 @@ $(document).ready(function () {
                 runGenerator(function* waitingfile() {
                     const fileAsArrayBuffer = yield takeCareOf(file.files[0], true);
 
-                    // Verify that one of the two files has .json extension:
-                    if (nameFile != "json") {
-                        if ($("#verification_alert_window").length === 0) {
-                            // warning alert appears:
-                            $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
-                                "id='verification_alert_window'>"
-                                +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
-                                +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
-                                +"</div>");
-                        }
+                    // Verify that the second file has .json extension, if not display a warning
+                    if (warningNotJSON(filename) === true) {
+                        // abort the function
                         return;
-                    } else if ($("#verification_alert").length !== 0) {
-                        $("#verification_alert").empty();
                     }
 
                     verifySignature(fileAsArrayBuffer, signatureAsString);
@@ -130,4 +80,27 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Check that the submitted file is a .json, if not display a warning
+ *
+ * @param filename     filename of the submitted file
+ * @returns {boolean}  true if the warning was displayed, otherwise false
+ */
+function warningNotJSON(filename) {
+    let abort = false;
 
+    if (filename != "json") {
+        if ($("#verification_alert_window").length === 0) {
+            abort = true;
+            // warning alert appears:
+            $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
+                "id='verification_alert_window'>"
+                +"<a href='#' class='close' data-dismiss='alert' aria-label='close'>"+ "&times;"
+                +"</a><strong>"+ "Warning! " +"</strong>"+ "The signature file uploaded needs to be a .json."
+                +"</div>");
+        }
+    } else if ($("#verification_alert").length !== 0) {
+        $("#verification_alert").empty();
+    }
+    return abort;
+}
