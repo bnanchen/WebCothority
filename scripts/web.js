@@ -107,6 +107,11 @@ function websocketSign(address, file) {
                 // Create a list of ServerIdentities for the roster
                 let agg = [];
                 if (window.listNodes.length === 6) {
+                    // remove the alert if it is displayed
+                    if ($("#file_size_alert_window").length !== 0) {
+                        $("#file_size_alert").empty();
+                    }
+
                     const listServers = window.listNodes.map(function(node, index) {
                         const server = node.server;
                         // public key of a server
@@ -138,7 +143,7 @@ function websocketSign(address, file) {
                 }
             });
         } catch(err) {
-            // warning alert appears if the file is too big (for the TweetNaCl.js library heap)
+            // alert appears if the file is too big (for the TweetNaCl.js library heap)
             if ($("#file_size_alert_window").length === 0) {
                 $("#file_size_alert").append("<div class='alert alert-danger alert-dismissible fade in'" +
                     "id='file_size_alert_window'>"

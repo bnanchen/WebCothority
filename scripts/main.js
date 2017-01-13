@@ -91,8 +91,9 @@ function warningNotJSON(filename) {
     let abort = false;
 
     if (filename != "json") {
+        abort = true;
+
         if ($("#verification_alert_window").length === 0) {
-            abort = true;
             // warning alert appears:
             $("#verification_alert").append("<div class='alert alert-warning alert-dismissible fade in'" +
                 "id='verification_alert_window'>"
