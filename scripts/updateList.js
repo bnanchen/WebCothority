@@ -8,7 +8,7 @@ function updateList() {
 
         window.listNodes = [];
         for (let address of listAddresses) {
-            let message = yield websocket_status(address);
+            let message = yield websocketStatus(address);
             window.listNodes.push(nodeCreation(message));
         }
 

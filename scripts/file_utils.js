@@ -26,6 +26,74 @@ function takeCareOf(file, asArrayBuffer) {
 }
 
 /**
+ * Process the information to allow the user to download the signature JSON file
+ *
+ * @param fileSigned  signed file as an ArrayBuffer
+ * @param filename    name of the signed file
+ * @param message     array containing the file's signature and the aggregate-key
+ */
+function saveToFile(fileSigned, filename, message) {
+    // instantiate the nacl module:
+    nacl_factory.instantiate(function (nacl) {
+        const signature = new Uint8Array(message[0].signature.toArrayBuffer());
+        const hash = nacl.crypto_hash_sha256(bytesToHex(fileSigned)); // typeof: Uint8Array
+
+        const signatureBase64 = btoa(String.fromCharCode.apply(null, signature));
+        const aggregateKeyBase64 = btoa(String.fromCharCode.apply(null, message[1]));
+        const hashBase64 = btoa(String.fromCharCode.apply(null, hash));
+
+        // if the download button doesn't exist: create it
+        if ($("#download_button").length === 0) {
+            $("#add_download_button").append("<button class='btn btn-primary' type='button' id='download_button'>"
+                + "Download the Signature" + "</button>");
+        }
+
+        // download the JSON file in clicking on the download_button
+        $("#download_button").unbind('click').click(function () {
+            downloadJSONFile(filename, signatureBase64, aggregateKeyBase64, hashBase64);
+        });
+    });
+}
+
+/**
+ * Let the user download the JSON signature file to his computer
+ *
+ * @param filename
+ * @param signature      file's signature
+ * @param aggregateKey   aggregate-key
+ * @param hash           file's hash
+ */
+function downloadJSONFile(filename, signature, aggregateKey, hash) {
+    // today date in format: mm/dd/yyyy
+    const currentTime = new Date();
+    const day = currentTime.getDay();
+    const month = currentTime.getMonth()+1; // January is number 0
+    const year = currentTime.getFullYear();
+
+    const jsonFile = {
+        filename: filename,
+        date: day +"/"+ month +"/"+ year,
+        signature: signature,
+        'aggregate-key': aggregateKey,
+        hash: hash
+    };
+
+    const blob = new Blob([JSON.stringify(jsonFile, null, 5)], {type: 'application/json'});
+
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else {
+        const elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = "signature_of_" + filename +".json";
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+}
+
+/**
  * Isolate the filename from the full path of the file
  *
  * @param fullPathName full path of the file
