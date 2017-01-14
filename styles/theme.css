@@ -16,6 +16,10 @@ td, th {
   text-align: center;
 }
 
+#interact_cothority {
+  margin: 15px;
+}
+
 #progress_bar {
   margin: 10px 0;
   padding: 3px;
