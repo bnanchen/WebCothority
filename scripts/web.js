@@ -67,8 +67,7 @@ function websocketStatus(address) {
     function loadReceivedMessage() {
         return new Promise(function (resolve, reject) {
             socket.onmessage = function(e) {
-                let returnedMessage;
-                returnedMessage = protoFile.build("Response").decode(e.data);
+                const returnedMessage = protoFile.build("Response").decode(e.data);
 
                 resolve(returnedMessage);
             };
@@ -159,7 +158,7 @@ function websocketSign(address, file) {
     function loadReceivedMessage() {
         return new Promise(function (resolve, reject) {
             socket.onmessage = function(e) {
-                let returnedMessage = [protoFile.build("SignatureResponse").decode(e.data), aggKey];
+                const returnedMessage = [protoFile.build("SignatureResponse").decode(e.data), aggKey];
 
                 resolve(returnedMessage);
             };
