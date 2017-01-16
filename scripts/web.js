@@ -117,7 +117,6 @@ function websocketSign(address, file) {
                         const pub = new Uint8Array(server.public.toArrayBuffer());
                         // multiply the x-axis of point with -1, because TweetNaCl.js doesn’t have unpack, only unpackneg
                         pub[31] ^= 128;
-                        // the point is represented as a 2-dimensional array
                         const pubPos = [gf(), gf(), gf(), gf()]; // zero-point
                         unpackneg(pubPos, pub);
                         if (index === 0) {
